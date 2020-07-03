@@ -1,0 +1,26 @@
+.instructions {
+    background-color: green;
+    padding: 5%;
+    
+}
+
+.instructions h2{
+    color: white;
+    text-align: center;
+}
+
+.instructions h3 {
+    color: white;
+    margin-left: 1%;
+}
+
+.instructions li {
+    color: white;
+    font-size: 1.2em;
+}
+
+.instructions footer {
+    text-align: center;
+    color: white;
+    font-size: 1.2em;
+}
