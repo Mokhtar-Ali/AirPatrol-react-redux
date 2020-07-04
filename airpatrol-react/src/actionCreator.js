@@ -15,6 +15,8 @@ export const addTree = (data) => dispatch => {
         body: JSON.stringify(data)
       })
         .then(resp => resp.json())
-        .then(response => dispatch({type: 'ADD_TREE', payload: response}) )      
+        .then(response => {
+            dispatch({type: 'PLANT_TREE', payload: response}) 
+        })      
 }
  
