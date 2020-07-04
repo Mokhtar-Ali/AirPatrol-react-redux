@@ -6,7 +6,10 @@ const defaultState = {
     timer: 180, // work on logic for timer
     fireWood: 0,
     weather: "",
-    temperature: null,
+    temperature: 0,
+    bodyTemp: 99,
+    health: 100,
+    treesChopped: 0,
 
 }
 

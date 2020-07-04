@@ -1,0 +1,19 @@
+.game {
+    margin: 1%;
+    padding: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.left, .middle, .right, .tools {
+    display: flex;
+    flex-direction: column;
+    font-size: .9em;
+    font-weight: bold;
+}
