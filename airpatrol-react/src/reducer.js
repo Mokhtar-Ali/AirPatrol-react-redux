@@ -26,7 +26,13 @@ function reducer(state = defaultState, action) {
         case 'REMOVE_USER':
             return { ...state, currentUser: null }
         case 'ASSIGN_ATMOSPHERE':
-            return {...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: action.payload.oxygen, carbon_dioxide: action.payload.carbon_dioxide}
+            let oxygen = action.payload.oxygen
+            let carbon_dioxide = action.payload.carbon_dioxide
+            action.payload.trees.map(tree => {
+                oxygen += tree.oxygen
+                carbon_dioxide += tree.carbon_dioxide
+            })
+            return {...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: oxygen, carbon_dioxide: carbon_dioxide}
         case 'ASSIGN_TREES':
             return {...state, trees: action.payload}
         default:
