@@ -4,7 +4,7 @@ const defaultState = {
     score: 10,
     atmosphere: null,
     timer: 180, // work on logic for timer
-    fireWood: 0,
+    fireWood: 10,
     weather: "",
     temperature: 0,
     bodyTemp: 99,

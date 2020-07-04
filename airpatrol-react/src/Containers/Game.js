@@ -11,8 +11,8 @@ function Game(props) {
     useEffect(() => {
         const interval = setInterval(() => {
             displayWeather();
-          }, 60000);
-      
+        }, 60000);
+
         fetch("http://localhost:3000/atmospheres", {
             method: "Post",
             headers: {
@@ -22,17 +22,17 @@ function Game(props) {
         })
             .then(resp => resp.json())
             .then(response => props.assignAtmosphere(response))
-            displayWeather()
+        displayWeather()
     }, [])
 
 
-    function displayWeather(){
+    function displayWeather() {
         const weather = ["Sunny  ☀️", "Rainy  🌧", "Cloudy  🌫", "Snowy  ❄️"];
         const randomCondition = weather[Math.floor(Math.random() * weather.length)];
         setWeather(randomCondition)
-    
+
         if (randomCondition === "Sunny  ☀️") {
-            setTemperature(Math.floor(Math.random() * (90 - 50)) + 50) 
+            setTemperature(Math.floor(Math.random() * (90 - 50)) + 50)
         } else if (randomCondition === "Rainy  🌧") {
             setTemperature(Math.floor(Math.random() * (70 - 40)) + 40)
         } else if (randomCondition === "Cloudy  🌫") {
@@ -40,8 +40,8 @@ function Game(props) {
         } else {
             setTemperature(Math.floor(Math.random() * (33 - 20)) + 1)
         }
-      };
-    
+    };
+
     //   const changeWeather = useInterval(displayWeather, 5000);
 
     return (
@@ -68,13 +68,15 @@ function Game(props) {
                             <p>Trees Planted: {props.trees.length}</p>
                             <p>Trees Chopped: {props.treesChopped}</p>
                             <p>Firewood: {props.fireWood}</p>
+                            <p>Fire: 100% </p>
 
                         </div> {/* End right div */}
 
                         <div className='tools'>
-                            <p>Plant Tree</p>
-                            <p>Cut Tree</p>
-                            <p>Water Tree</p>
+                            <h4 style={{textAlign: 'center'}}>Tools</h4>
+                            Plant Tree <button ><img src="https://media.istockphoto.com/vectors/illustration-of-human-hand-holding-green-small-tree-image-for-vector-id517049638?k=6&m=517049638&s=612x612&w=0&h=FNpXoH_gDwAlKBzYalzeSvZ3Hh8DfvcURin7nYz3x6g=" alt="seedling" class="img-size" /></button>
+                            Water Tree <button > <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fst2.depositphotos.com%2F1060654%2F8908%2Fv%2F950%2Fdepositphotos_89087864-stock-illustration-watering-can-vector.jpg" alt="watering-can" class="img-size" /> </button>
+                            Cut Tree <button ><img src="https://static.vecteezy.com/system/resources/previews/000/516/135/original/axe-in-the-stump-vector-illustration.jpg" alt="axe" class="img-size" /></button>
 
                         </div> {/* End tools div */}
                     </div> {/* End Stats div*/}

@@ -1,5 +1,5 @@
 .game {
-    margin: 1%;
+    /* margin: 1%; */
     padding: auto;
     display: flex;
     flex-direction: column;
@@ -9,6 +9,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    background-color: lightblue;
+    
 }
 
 .left, .middle, .right, .tools {
@@ -16,4 +18,11 @@
     flex-direction: column;
     font-size: .9em;
     font-weight: bold;
+    padding: 1%;
 }
+
+.img-size {
+    justify-content: flex-end;
+    width: 25px;
+    height: 25px;
+  }
