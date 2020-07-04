@@ -1,5 +1,5 @@
 const defaultState = {
-    currentUser: null, // {id: 2, name: 'Mocha', password: 123},
+    currentUser: null,
     trees: [],
     score: 10,
     atmosphere: null,
@@ -10,6 +10,8 @@ const defaultState = {
     bodyTemp: 99,
     health: 100,
     treesChopped: 0,
+    oxygen: 0,
+    carbon_dioxide: 0
 
 }
 
@@ -24,9 +26,8 @@ function reducer(state = defaultState, action) {
         case 'REMOVE_USER':
             return { ...state, currentUser: null }
         case 'ASSIGN_ATMOSPHERE':
-            return {...state, atmosphere: action.payload, trees: action.payload.trees}
+            return {...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: action.payload.oxygen, carbon_dioxide: action.payload.carbon_dioxide}
         case 'ASSIGN_TREES':
-            console.log('in reducer');
             return {...state, trees: action.payload}
         default:
             return state
