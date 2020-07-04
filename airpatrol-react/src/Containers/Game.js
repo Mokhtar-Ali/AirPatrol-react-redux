@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useInterval } from 'react';
 import { connect } from 'react-redux'
 import { assignAtmosphere } from '../actionCreator'
 import '../Css/game.css'
@@ -6,7 +6,13 @@ import '../Css/game.css'
 
 function Game(props) {
 
+    const [weather, setWeather] = useState(0)
+    const [temperature, setTemperature] = useState(0)
     useEffect(() => {
+        const interval = setInterval(() => {
+            displayWeather();
+          }, 60000);
+      
         fetch("http://localhost:3000/atmospheres", {
             method: "Post",
             headers: {
@@ -16,8 +22,27 @@ function Game(props) {
         })
             .then(resp => resp.json())
             .then(response => props.assignAtmosphere(response))
+            displayWeather()
     }, [])
 
+
+    function displayWeather(){
+        const weather = ["Sunny  ☀️", "Rainy  🌧", "Cloudy  🌫", "Snowy  ❄️"];
+        const randomCondition = weather[Math.floor(Math.random() * weather.length)];
+        setWeather(randomCondition)
+    
+        if (randomCondition === "Sunny  ☀️") {
+            setTemperature(Math.floor(Math.random() * (90 - 50)) + 50) 
+        } else if (randomCondition === "Rainy  🌧") {
+            setTemperature(Math.floor(Math.random() * (70 - 40)) + 40)
+        } else if (randomCondition === "Cloudy  🌫") {
+            setTemperature(Math.floor(Math.random() * (60 - 40)) + 40)
+        } else {
+            setTemperature(Math.floor(Math.random() * (33 - 20)) + 1)
+        }
+      };
+    
+    //   const changeWeather = useInterval(displayWeather, 5000);
 
     return (
         <div>
@@ -32,8 +57,8 @@ function Game(props) {
                         </div> {/* End Left div */}
 
                         <div className='middle '>
-                            <p>Weather: {props.weather}</p>
-                            <p>Temperature: {props.temperature}</p>
+                            <p>Weather: {weather}</p>
+                            <p>Temperature: {temperature}</p>
                             <p>Oxygine: 0 </p>
                             <p>Carbon Dioxide: 0 </p>
 
