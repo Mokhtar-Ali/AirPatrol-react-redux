@@ -2,6 +2,7 @@ const defaultState = {
     currentUser: null,
     trees: [],
     score: 10,
+    treesNum: 10,
     atmosphere: null,
     timer: 180, // work on logic for timer
     fireWood: 10,
@@ -33,8 +34,13 @@ function reducer(state = defaultState, action) {
                 carbon_dioxide += tree.carbon_dioxide
             })
             return {...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: oxygen, carbon_dioxide: carbon_dioxide}
-        case 'ASSIGN_TREES':
-            return {...state, trees: action.payload}
+
+        case 'PLANT_TREE':
+            return {...state, trees: [...state.trees, action.payload], oxygen: state.oxygen += action.payload.oxygen, carbon_dioxide: state.carbon_dioxide += action.payload.carbon_dioxide, treesNum: state.treesNum += 1}
+        case 'CUT_TREE':
+        case 'WATER_TREE':
+
+        
         default:
             return state
     }
