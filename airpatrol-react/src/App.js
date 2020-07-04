@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { connect } from 'react-redux'
+import Instructions from './Components/Instructions'
+import Signup from './Forms/Signup';
+import Login from './Forms/Login';
 
-function App() {
+function App(props) {
+  const [switchLoginToSignup, setswitchLoginSignup] = useState(false)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Instructions />
+      {props.currentUser ?
+        <button> Start Game </button>
+        : <div>
+          {switchLoginToSignup ? <Signup /> : <Login />}
+          <button onClick={() => setswitchLoginSignup(!switchLoginToSignup)}>Switch to Signup</button>
+        </div>
+      }
+
     </div>
   );
 }
 
-export default App;
+const msp = state => {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+export default connect(msp)(App)

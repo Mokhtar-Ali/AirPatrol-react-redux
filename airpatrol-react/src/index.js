@@ -7,15 +7,18 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { createStore } from 'redux'
 import reducer from './reducer'
 import { Provider } from 'react-redux'
+import Game from './Containers/Game'
 
 const store = createStore(reducer)
 
 ReactDOM.render(
     <Provider store={store}>
         <Router>
-            <Route exact path="/" component={App} />
-            {/* <Route exact path="/login" render={() => <LoginForm />} />
-            <Route exact path="/signup" render={() => <Signup />} /> */}
+        
+                <Route exact path="/"><App /> </Route>
+                <Route exact path="/game"><Game /> </Route>
+                {/* <Route path="/game" component={APP} /> */}
+            
         </Router>
     </Provider>
 
