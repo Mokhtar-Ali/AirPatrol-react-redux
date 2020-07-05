@@ -33,3 +33,6 @@ export const decreaseHealth = () => ({type: 'DECREASE_HEALTH'})
 
 export const decreaseFire10 = () => ({type: 'DECREASE_FIRE_10'})
 export const decreaseFire20 = () => ({type: 'DECREASE_FIRE_20'})
+
+export const decreaseBodyTempBy10 = () => ({type: 'DECREASE_BODY_TEMP_10'})
+export const decreaseBodyTempBy20 = () => ({type: 'DECREASE_BODY_TEMP_20'})

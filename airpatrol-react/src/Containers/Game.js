@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useInterval } from 'react';
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20 } from '../actionCreator'
+import { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20 } from '../actionCreator'
 import '../Css/game.css'
 
 
@@ -62,12 +62,8 @@ function Game(props) {
         }
     }
 
-    function consumeFire(){
-        if(temperature <= 50 && temperature >= 40){// decrease fire health every 10 seconds by 10% 
-            props.decreaseFire10() 
-        }else if(temperature < 40){                // decrease fire health every 10 seconds by 20% 
-            props.decreaseFire20()
-        }
+    function waterTree(){
+
     }
 
     function feedFire() {
@@ -76,6 +72,17 @@ function Game(props) {
         }
     }
 
+    function consumeFire(){
+        if(temperature <= 50 && temperature >= 40){// decrease fire health every 10 seconds by 10% 
+            props.decreaseFire10() 
+            props.decreaseBodyTempBy10()
+        }else if(temperature < 40){                // decrease fire health every 10 seconds by 20% 
+            props.decreaseFire20()
+            props.decreaseBodyTempBy20()
+        }
+    }
+
+ 
     function checkHealth() {
         if (props.fire < 10 || props.oxygen < props.carbon_dioxide) {
             props.decreaseHealth()
@@ -157,7 +164,7 @@ const msp = state => {
     }
 }
 
-export default connect(msp, { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20 })(Game)
+export default connect(msp, { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20 })(Game)
 
 
 // timer: 180, // work on logic for timer

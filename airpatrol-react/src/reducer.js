@@ -60,6 +60,10 @@ function reducer(state = defaultState, action) {
         case 'DECREASE_FIRE_20':
             return { ...state, fire: state.fire -= 20 }
 
+        case 'DECREASE_BODY_TEMP_10':
+            return { ...state, bodyTemp: state.bodyTemp -= 10 }
+        case 'DECREASE_BODY_TEMP_20':
+            return { ...state, bodyTemp: state.bodyTemp -= 20 }
         default:
             return state
     }
