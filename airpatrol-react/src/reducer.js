@@ -11,6 +11,7 @@ const defaultState = {
     bodyTemp: 99,
     health: 100,
     treesChopped: 0,
+    treesPlanted: 0,
     oxygen: 0,
     carbon_dioxide: 0
 
@@ -36,8 +37,13 @@ function reducer(state = defaultState, action) {
             return {...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: oxygen, carbon_dioxide: carbon_dioxide}
 
         case 'PLANT_TREE':
-            return {...state, trees: [...state.trees, action.payload], oxygen: state.oxygen += action.payload.oxygen, carbon_dioxide: state.carbon_dioxide += action.payload.carbon_dioxide, treesNum: state.treesNum += 1}
+            return {...state, trees: [...state.trees, action.payload], oxygen: state.oxygen += action.payload.oxygen, carbon_dioxide: state.carbon_dioxide += action.payload.carbon_dioxide, treesNum: state.treesNum += 1, treesPlanted: state.treesPlanted += 1}
         case 'CUT_TREE':
+            let tree = state.trees.find(t => t.id === action.payload)
+            let treesCopy = [...state.trees.filter(tree => tree.id !== action.payload)]
+            console.log(tree.firewood);
+            
+            return {...state, trees: treesCopy, oxygen: state.oxygen -= tree.oxygen, carbon_dioxide: state.carbon_dioxide -= tree.carbon_dioxide, treesNum: state.treesNum -= 1, treesChopped: state.treesChopped += 1,fireWood: state.fireWood += tree.firewood}
         case 'WATER_TREE':
 
         

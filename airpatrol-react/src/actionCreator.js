@@ -20,3 +20,9 @@ export const addTree = (data) => dispatch => {
         })      
 }
  
+export const cutTree = (id) => dispatch => {
+    fetch(`${TreesApi}/${id}`, {
+        method: "DELETE"
+      })
+      dispatch({type: 'CUT_TREE', payload: id})
+}
