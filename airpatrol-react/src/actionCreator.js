@@ -30,3 +30,6 @@ export const cutTree = (id) => dispatch => {
 export const moreFire = () => ({type: 'FEED_FIRE'})
 export const increaseHealth = () => ({type: 'INCREASE_HEALTH'})
 export const decreaseHealth = () => ({type: 'DECREASE_HEALTH'})
+
+export const decreaseFire10 = () => ({type: 'DECREASE_FIRE_10'})
+export const decreaseFire20 = () => ({type: 'DECREASE_FIRE_20'})

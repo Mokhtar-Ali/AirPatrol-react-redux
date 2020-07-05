@@ -54,8 +54,12 @@ function reducer(state = defaultState, action) {
             return { ...state, health: state.health -= 10 }
         case 'DECREASE_HEALTH':
             return { ...state, health: state.health -= 10 }
+        
+        case 'DECREASE_FIRE_10':
+            return { ...state, fire: state.fire -= 10 }
+        case 'DECREASE_FIRE_20':
+            return { ...state, fire: state.fire -= 20 }
 
-            
         default:
             return state
     }
