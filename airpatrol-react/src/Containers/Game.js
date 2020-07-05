@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useInterval } from 'react';
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { assignAtmosphere, addTree, cutTree, increaseScore } from '../actionCreator'
+import { assignAtmosphere, addTree, cutTree, increaseScore, moreFire, increaseHealth, decreaseHealth } from '../actionCreator'
 import '../Css/game.css'
 
 
@@ -58,7 +58,24 @@ function Game(props) {
             let id = treesCopy[treesCopy.length - 1].id
             props.cutTree(id)
         }else{
-            window.alert('no no')
+            window.alert('no more trees to cut, better plant some')
+        }
+    }
+
+    function feedFire(){
+        if(props.fire < 50 && props.fireWood > 0){
+            props.moreFire()
+        }
+    }
+
+    function checkHealth(){
+        if(props.fire < 10 || props.oxygen < props.carbon_dioxide){
+            props.decreaseHealth()
+        }else if(props.fire > 50 && props.oxygen > props.carbon_dioxide && props.health <=90) {
+            props.increaseHealth()
+        }
+        else{
+            return
         }
     }
 
@@ -84,7 +101,7 @@ function Game(props) {
                         </div> {/* End middle div */}
 
                         <div className='right'>
-                            <p>Trees Planted: {props.treesPlanted}</p>
+                            <p>Trees Planted: {props.trees.length}</p>
                             <p>Trees Chopped: {props.treesChopped}</p>
                             <p>Firewood: {props.fireWood}</p>
                             <p>Fire: 100% </p>
@@ -110,14 +127,15 @@ function Game(props) {
 const msp = state => {
     return {
         score: state.score,
-        atmosphere: state.atmosphere,
         currentUser: state.currentUser,
-        fireWood: state.fireWood,
-        bodyTemp: state.bodyTemp,
-        health: state.health,
+        atmosphere: state.atmosphere,
         trees: state.trees,
         treesPlanted: state.treesPlanted,
         treesChopped: state.treesChopped,
+        fire: state.fire,
+        fireWood: state.fireWood,
+        bodyTemp: state.bodyTemp,
+        health: state.health,
         weather: state.weather,
         temperature: state.temperature,
         oxygen: state.oxygen,
@@ -125,7 +143,7 @@ const msp = state => {
     }
 }
 
-export default connect(msp, { assignAtmosphere, addTree, cutTree, increaseScore })(Game)
+export default connect(msp, { assignAtmosphere, addTree, cutTree, increaseScore, moreFire, increaseHealth, decreaseHealth })(Game)
 
 
 // timer: 180, // work on logic for timer
