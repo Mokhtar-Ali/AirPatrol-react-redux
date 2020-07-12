@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useInterval } from 'react';
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20, waterTreeACreator } from '../actionCreator'
+import {
+    assignAtmosphere,
+    addTree, cutTree, waterTreeACreator,
+    increaseScore, decreaseScore,
+    moreFire, decreaseFire10, decreaseFire20,
+    increaseHealth, decreaseHealth, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20
+} from '../actionCreator'
 import '../Css/game.css'
 
 // const history = useHistory()
@@ -29,35 +35,21 @@ class Game extends React.Component {
 
     componentDidMount() {
         this.displayWeather()
+        setInterval(() => {
+            this.feedFire()
+        }, 3000);
+
     }
-    // useEffect(() => {
 
-    //     
+    componentDidUpdate() {
 
-    //     // const interval = setInterval(() => {
-    //     //     if (fire < 50) {
-    //     //         let newFire = 100
-    //     //         let newFireWood = fireWood - 2
-    //     //         setFire(newFire)
-    //     //         setFireWood(newFireWood)
-    //     //     } else if (fire > 50) {
-    //     //         let newFire = fire - 10
-    //     //         setFire(newFire)
-    //     //     }
-    //     // }, 3000);
-
-    //     // return () => clearInterval(interval);
-    // }, [])
-
-
-
-
-
+    }
 
     displayWeather = () => {
         const weather = ["Sunny  ☀️", "Rainy  🌧", "Cloudy  🌫", "Snowy  ❄️"];
         const randomCondition = weather[Math.floor(Math.random() * weather.length)];
         // setWeather(randomCondition)
+        this.setState({ weather: randomCondition })
 
         if (randomCondition === "Sunny  ☀️") {
             this.setState({ temperature: (Math.floor(Math.random() * (90 - 50)) + 50) })
@@ -72,7 +64,7 @@ class Game extends React.Component {
 
             this.props.decreaseBodyTempBy10()
         } else {
-            this.setState({ temperature: (Math.floor(Math.random() * (33 - 20)) + 1) })
+            this.setState({ temperature: (Math.floor(Math.random() * (33 - 20)) + 20) })
 
             this.props.decreaseBodyTempBy20()
         }
@@ -103,8 +95,11 @@ class Game extends React.Component {
 
 
     feedFire = () => {
-        // setFire(100)
-        // setFireWood(fireWood -= 2)
+        if (this.props.fire <= 20) {
+            this.props.moreFire()
+        } else {
+            this.props.decreaseFire10()
+        }
     }
 
     consumeFire = () => {
