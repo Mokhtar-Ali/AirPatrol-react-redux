@@ -37,12 +37,18 @@ class Game extends React.Component {
         this.displayWeather()
         setInterval(() => {
             this.feedFire()
-        }, 3000);
+        }, 1000);
 
     }
 
     componentDidUpdate() {
+        if(this.props.fire === 0){
+            this.props.decreaseScore()
+            this.props.decreaseBodyTempBy10()
+            this.props.decreaseHealth()
 
+            // window.alert('No More FireWood, Chop some trees')
+        }
     }
 
     displayWeather = () => {

@@ -5,7 +5,7 @@ const defaultState = {
     treesNum: 10,
     atmosphere: null,
     timer: 180, // work on logic for timer
-    fireWood: 10,
+    fireWood: 4,
     fire: 30,
     weather: "",
     temperature: 0,
@@ -50,12 +50,14 @@ function reducer(state = defaultState, action) {
             // let smallTrees = state.trees.filter(tree => tree.size === "small");
             // let mediumTrees = state.trees.filter(tree => tree.size === "medium");
             let treesCopy2 = [...state.trees.filter(tree => tree.id !== action.payload.id)]
-            let trees2 = [...treesCopy2 , action.payload]
-            return { ...state, trees: trees2}
+            let trees2 = [...treesCopy2, action.payload]
+            return { ...state, trees: trees2 }
 
 
         case 'FEED_FIRE':
-            return { ...state, fireWood: state.fireWood -= 2, fire: 100 }
+            if (state.fireWood >= 2) {
+                return { ...state, fireWood: state.fireWood -= 2, fire: 100 }
+            } else return { ...state, fire: 0 }
 
         case 'INCREASE_HEALTH':
             return { ...state, health: state.health -= 10 }
