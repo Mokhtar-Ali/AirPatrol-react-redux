@@ -38,18 +38,20 @@ class Game extends React.Component {
         setInterval(() => {
             this.feedFire()
         }, 1000);
-
+        setInterval(() => {
+            if (this.props.fire === 0) {
+                this.props.decreaseScore()
+                this.props.decreaseBodyTempBy10()
+                this.props.decreaseHealth()
+            }
+        }, 3000);
     }
 
     componentDidUpdate() {
-        if(this.props.fire === 0){
-            this.props.decreaseScore()
-            this.props.decreaseBodyTempBy10()
-            this.props.decreaseHealth()
-
-            // window.alert('No More FireWood, Chop some trees')
-        }
+       
+        // window.alert('No More FireWood, Chop some trees')
     }
+
 
     displayWeather = () => {
         const weather = ["Sunny  ☀️", "Rainy  🌧", "Cloudy  🌫", "Snowy  ❄️"];
