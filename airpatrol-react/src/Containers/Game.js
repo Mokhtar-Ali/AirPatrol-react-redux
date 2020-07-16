@@ -6,7 +6,7 @@ import {
     increaseScore, decreaseScore,
     moreFire, decreaseFire10, decreaseFire20,
     increaseHealth, decreaseHealth, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20,
-    fillWell, upgradeWell
+    fillWell, upgradeWell, reducerWaterSupply
 } from '../actionCreator'
 import '../Css/game.css'
 
@@ -38,10 +38,14 @@ class Game extends React.Component {
 
         setInterval(() => {
             this.displayWeather()
-            if(this.weather === "Rainy  🌧" ){
+           
+        }, 3000);
+
+        setInterval(() => {
+            if(this.state.weather === "Rainy  🌧" ){
                 this.props.fillWell()
             }
-        }, 5000);
+        }, 1000)
 
         setInterval(() => {
             this.feedFire()
@@ -141,10 +145,11 @@ class Game extends React.Component {
         let id = this.props.trees[0].id
         // console.log(id);
         // console.log(props.trees);
-        if(this.props.water >= 1){
+        if(this.props.water_supply >= 1){
             this.props.waterTreeACreator(id)
-            // write func in reducer to decrease water by 1 
-
+            this.props.reducerWaterSupply()
+        }else {
+            window.alert('No water, wait for the rain, or upgrade Well Size')
         }
     };
 
@@ -251,7 +256,7 @@ const msp = state => {
     }
 }
 
-export default connect(msp, { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20, waterTreeACreator })(Game)
+export default connect(msp, { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20, waterTreeACreator, fillWell, upgradeWell, reducerWaterSupply})(Game)
 
 
 // timer: 180, // work on logic for timer

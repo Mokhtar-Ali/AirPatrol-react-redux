@@ -60,3 +60,4 @@ export const increaseBodyTempBy20 = () => ({ type: 'INCREASE_BODY_TEMP_20' })
 
 export const fillWell = () => ({type: 'FILL_WELL'})
 export const upgradeWell = () => ({type: 'UPGRADE_WELL'})
+export const reducerWaterSupply = () => ({type: 'REDUCE_WATER_SUPPLY'})

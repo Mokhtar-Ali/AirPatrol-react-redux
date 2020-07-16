@@ -86,6 +86,7 @@ function reducer(state = defaultState, action) {
                 return {...state, water_supply: 10}
             }else {
                 return {...state, water_supply: 15}
+        
             }
         case 'UPGRADE_WELL':
             if(state.well === 'small' && state.fireWood >= 10 ){
@@ -93,6 +94,9 @@ function reducer(state = defaultState, action) {
             }else if (state.well === 'medium' && state.fireWood >= 20 ){
                 return {...state, well: 'Large', fireWood: state.fireWood -= 20}
             }
+
+        case 'REDUCE_WATER_SUPPLY':
+            return {...state, water_supply: state.water_supply -= 1}
         default:
             return state
     }
