@@ -5,18 +5,18 @@ const defaultState = {
     treesNum: 10,
     atmosphere: null,
     timer: 180, // work on logic for timer
-    fireWood: 4,
-    fire: 30,
+    fireWood: 100,
+    fire: 100,
     weather: "",
     temperature: 0,
-    bodyTemp: 98.6,
+    bodyTemp: 98,
     health: 100,
     treesChopped: 0,
     treesPlanted: 0,
     oxygen: 0,
     carbon_dioxide: 0,
     well: 'small',
-    water_supply: 5
+    water_supply: 0
 
 }
 
@@ -60,7 +60,7 @@ function reducer(state = defaultState, action) {
             } else return { ...state, fire: 0 }
 
         case 'INCREASE_HEALTH':
-            return { ...state, health: state.health -= 10 }
+            return { ...state, health: state.health += 10 }
         case 'DECREASE_HEALTH':
             return { ...state, health: state.health -= 10 }
 
@@ -78,6 +78,21 @@ function reducer(state = defaultState, action) {
             return { ...state, bodyTemp: state.bodyTemp += 10 }
         case 'INCREASE_BODY_TEMP_20':
             return { ...state, bodyTemp: state.bodyTemp += 20 }
+
+        case 'FILL_WELL':
+            if(state.well === 'small'){
+                return {...state, water_supply: 5}
+            }else if(state.well === 'medium'){
+                return {...state, water_supply: 10}
+            }else {
+                return {...state, water_supply: 15}
+            }
+        case 'UPGRADE_WELL':
+            if(state.well === 'small' && state.fireWood >= 10 ){
+                return {...state, well: 'medium', fireWood: state.fireWood -= 10}
+            }else if (state.well === 'medium' && state.fireWood >= 20 ){
+                return {...state, well: 'Large', fireWood: state.fireWood -= 20}
+            }
         default:
             return state
     }

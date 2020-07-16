@@ -56,3 +56,7 @@ export const decreaseBodyTempBy20 = () => ({ type: 'DECREASE_BODY_TEMP_20' })
 
 export const increaseBodyTempBy10 = () => ({ type: 'INCREASE_BODY_TEMP_10' })
 export const increaseBodyTempBy20 = () => ({ type: 'INCREASE_BODY_TEMP_20' })
+
+
+export const fillWell = () => ({type: 'FILL_WELL'})
+export const upgradeWell = () => ({type: 'UPGRADE_WELL'})

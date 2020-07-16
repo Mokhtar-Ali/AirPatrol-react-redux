@@ -12,6 +12,7 @@ import Game from './Containers/Game'
 
 const store = createStore(reducer, applyMiddleware(thunk))
 
+
 ReactDOM.render(
     <Provider store={store}>
         <Router>

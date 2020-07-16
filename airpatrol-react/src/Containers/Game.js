@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useInterval } from 'react';
-import { useHistory } from 'react-router-dom'
+import React from 'react';
 import { connect } from 'react-redux'
 import {
     assignAtmosphere,
     addTree, cutTree, waterTreeACreator,
     increaseScore, decreaseScore,
     moreFire, decreaseFire10, decreaseFire20,
-    increaseHealth, decreaseHealth, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20
+    increaseHealth, decreaseHealth, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20,
+    fillWell, upgradeWell
 } from '../actionCreator'
 import '../Css/game.css'
 
-// const history = useHistory()
+
 class Game extends React.Component {
 
     state = {
@@ -35,20 +35,58 @@ class Game extends React.Component {
 
     componentDidMount() {
         this.displayWeather()
+
+        setInterval(() => {
+            this.displayWeather()
+            if(this.weather === "Rainy  🌧" ){
+                this.props.fillWell()
+            }
+        }, 5000);
+
         setInterval(() => {
             this.feedFire()
-        }, 1000);
-        setInterval(() => {
-            if (this.props.fire === 0) {
+        }, 2000);
+
+        setInterval(() => { 
+            if (this.props.fire === 0 && this.props.score >= 5 && this.state.temperature < 60) {
                 this.props.decreaseScore()
-                this.props.decreaseBodyTempBy10()
-                this.props.decreaseHealth()
             }
         }, 3000);
+
+        setInterval(() => {
+            if (this.props.fire === 0 && this.props.health >= 10 && this.state.temperature < 60) {
+                this.props.decreaseHealth()
+            }
+        }, 3000)
+
+        setInterval(() => {
+            if (this.props.fire === 0 && this.props.bodyTemp >= 66 && this.state.temperature < 60) {
+                this.props.decreaseBodyTempBy10()
+            }
+        }, 3000)
+
+        setInterval(() => {
+            if(this.props.fire > 0 && this.props.health <= 90){
+                this.props.increaseHealth()
+            }
+        }, 3000)
+
+        setInterval(() => {
+            if(this.props.fire > 0 && this.props.bodyTemp <= 88){
+                this.props.increaseBodyTempBy10()
+            }
+        }, 3000)
+
+        setInterval(() => {
+            if(this.props.health <= 10){
+                window.alert('Game Over')
+                // check for history.push
+            }
+        }, 10000)
     }
 
     componentDidUpdate() {
-       
+
         // window.alert('No More FireWood, Chop some trees')
     }
 
@@ -80,8 +118,12 @@ class Game extends React.Component {
 
     plantTree = () => {
         let data = { atmosphere_id: this.props.atmosphere.id };
-        this.props.addTree(data)
-        this.props.increaseScore()
+        if(this.state.temperature >= 50){
+            this.props.addTree(data)
+            this.props.increaseScore()
+        } else {
+            window.alert("It's too cold to plant tress now")
+        }
     }
 
     chopTree = () => {
@@ -95,10 +137,15 @@ class Game extends React.Component {
     }
 
     waterTree = () => {
+
         let id = this.props.trees[0].id
         // console.log(id);
         // console.log(props.trees);
-        this.props.waterTreeACreator(id)
+        if(this.props.water >= 1){
+            this.props.waterTreeACreator(id)
+            // write func in reducer to decrease water by 1 
+
+        }
     };
 
 
@@ -168,6 +215,7 @@ class Game extends React.Component {
                                     Plant Tree <button onClick={this.plantTree}><img src="https://media.istockphoto.com/vectors/illustration-of-human-hand-holding-green-small-tree-image-for-vector-id517049638?k=6&m=517049638&s=612x612&w=0&h=FNpXoH_gDwAlKBzYalzeSvZ3Hh8DfvcURin7nYz3x6g=" alt="seedling" class="img-size" /></button>
                                     Water Tree <button onClick={this.waterTree} > <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fst2.depositphotos.com%2F1060654%2F8908%2Fv%2F950%2Fdepositphotos_89087864-stock-illustration-watering-can-vector.jpg" alt="watering-can" class="img-size" /> </button>
                                     Cut Tree <button onClick={this.chopTree}><img src="https://static.vecteezy.com/system/resources/previews/000/516/135/original/axe-in-the-stump-vector-illustration.jpg" alt="axe" class="img-size" /></button>
+                                    Upgrade Well <button onClick={this.props.upgradeWell} >Upgrade</button>
 
                                 </div> {/* End tools div */}
                             </div> {/* End Stats div*/}
