@@ -9,6 +9,7 @@ import {
     fillWell, upgradeWell, reducerWaterSupply
 } from '../actionCreator'
 import '../Css/game.css'
+import GameView from './GameView'
 
 
 class Game extends React.Component {
@@ -224,7 +225,8 @@ class Game extends React.Component {
 
                                 </div> {/* End tools div */}
                             </div> {/* End Stats div*/}
-                            <hr />
+                            
+                            <GameView />
                         </div> // {/* End Game div */}
 
                         : null
