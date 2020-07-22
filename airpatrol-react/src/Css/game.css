@@ -5,11 +5,11 @@
     flex-direction: column;
 }
 
-.stats {
+#stats {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: lightblue;
+    /* background-image: url('../images/sunny1.jpg'); */
     
 }
 
@@ -25,4 +25,7 @@
     justify-content: flex-end;
     width: 25px;
     height: 25px;
+  }
+  .game p {
+      color: white;
   }

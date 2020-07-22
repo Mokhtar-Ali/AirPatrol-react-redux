@@ -2,13 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux'
 import '../Css/gameView.css'
 
+
 class GameView extends React.Component {
 
 
     render() {
         return (
             <div className='game-view' >
-                <div className='sky'> Sky </div>
+                <div className='sky'>  
+                <image className='sky-pic' />
+                </div>
                 <div className='game-data'>
                     <div className='left-side'> left-side</div>
                     <div className='habitation'>

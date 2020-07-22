@@ -10,13 +10,16 @@ import {
 } from '../actionCreator'
 import '../Css/game.css'
 import GameView from './GameView'
+import Sunny2 from '../images/sunny2.jpg'
+import Sunny1 from '../images/sunny1.jpg'
 
 
 class Game extends React.Component {
 
     state = {
         weather: null,
-        temperature: null
+        temperature: null,
+        weatherImage: null
     }
 
     componentWillMount() {
@@ -39,11 +42,11 @@ class Game extends React.Component {
 
         setInterval(() => {
             this.displayWeather()
-           
+
         }, 3000);
 
         setInterval(() => {
-            if(this.state.weather === "Rainy  🌧" ){
+            if (this.state.weather === "Rainy  🌧") {
                 this.props.fillWell()
             }
         }, 1000)
@@ -52,7 +55,7 @@ class Game extends React.Component {
             this.feedFire()
         }, 2000);
 
-        setInterval(() => { 
+        setInterval(() => {
             if (this.props.fire === 0 && this.props.score >= 5 && this.state.temperature < 60) {
                 this.props.decreaseScore()
             }
@@ -71,19 +74,19 @@ class Game extends React.Component {
         }, 3000)
 
         setInterval(() => {
-            if(this.props.fire > 0 && this.props.health <= 90){
+            if (this.props.fire > 0 && this.props.health <= 90) {
                 this.props.increaseHealth()
             }
         }, 3000)
 
         setInterval(() => {
-            if(this.props.fire > 0 && this.props.bodyTemp <= 88){
+            if (this.props.fire > 0 && this.props.bodyTemp <= 88) {
                 this.props.increaseBodyTempBy10()
             }
         }, 3000)
 
         setInterval(() => {
-            if(this.props.health <= 10){
+            if (this.props.health <= 10) {
                 window.alert('Game Over')
                 // check for history.push
             }
@@ -99,31 +102,36 @@ class Game extends React.Component {
     displayWeather = () => {
         const weather = ["Sunny  ☀️", "Rainy  🌧", "Cloudy  🌫", "Snowy  ❄️"];
         const randomCondition = weather[Math.floor(Math.random() * weather.length)];
-        // setWeather(randomCondition)
         this.setState({ weather: randomCondition })
 
+
         if (randomCondition === "Sunny  ☀️") {
-            this.setState({ temperature: (Math.floor(Math.random() * (90 - 50)) + 50) })
+            this.setState({ temperature: (Math.floor(Math.random() * (90 - 50)) + 50)})
+            document.getElementById('stats').style.backgroundImage = `url(${Sunny1})` // change to sunny pic
 
             if (this.props.bodyTemp <= 89) { this.props.increaseBodyTempBy10() }
         } else if (randomCondition === "Rainy  🌧") {
             this.setState({ temperature: (Math.floor(Math.random() * (70 - 40)) + 40) })
-
+            document.getElementById('stats').style.backgroundImage = `url(${Sunny1})`// change to rain pic
+            
             if (this.props.bodyTemp <= 89) { this.props.increaseBodyTempBy10() }
+
         } else if (randomCondition === "Cloudy  🌫") {
             this.setState({ temperature: (Math.floor(Math.random() * (60 - 40)) + 40) })
-
             this.props.decreaseBodyTempBy10()
+            document.getElementById('stats').style.backgroundImage = `url(${Sunny1})` // change to cloudy pic
+
         } else {
             this.setState({ temperature: (Math.floor(Math.random() * (33 - 20)) + 20) })
 
             this.props.decreaseBodyTempBy20()
+            document.getElementById('stats').style.backgroundImage = `url(${Sunny1})` // change to snow pic
         }
     };
 
     plantTree = () => {
         let data = { atmosphere_id: this.props.atmosphere.id };
-        if(this.state.temperature >= 50){
+        if (this.state.temperature >= 50) {
             this.props.addTree(data)
             this.props.increaseScore()
         } else {
@@ -146,10 +154,10 @@ class Game extends React.Component {
         let id = this.props.trees[0].id
         // console.log(id);
         // console.log(props.trees);
-        if(this.props.water_supply >= 1){
+        if (this.props.water_supply >= 1) {
             this.props.waterTreeACreator(id)
             this.props.reducerWaterSupply()
-        }else {
+        } else {
             window.alert('No water, wait for the rain, or upgrade Well Size')
         }
     };
@@ -189,7 +197,7 @@ class Game extends React.Component {
                 {
                     this.props.atmosphere ?
                         <div className='game'>
-                            <div className='stats'>
+                            <div id='stats' style={{ backgroundImage:`url(${Sunny2})` }}>
                                 <div className='left'>
                                     <p>Name: {this.props.currentUser.name}</p>
                                     <p>Score: {this.props.score}</p>
@@ -225,8 +233,10 @@ class Game extends React.Component {
 
                                 </div> {/* End tools div */}
                             </div> {/* End Stats div*/}
-                            
-                            <GameView />
+                            {/* <div style={{backgroundImage: Sunny1, height:'100%', width: '100%'}}> </div> */}
+                            <GameView
+                                weatherImage={this.state.weatherImage}
+                            />
                         </div> // {/* End Game div */}
 
                         : null
@@ -258,11 +268,4 @@ const msp = state => {
     }
 }
 
-export default connect(msp, { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20, waterTreeACreator, fillWell, upgradeWell, reducerWaterSupply})(Game)
-
-
-// timer: 180, // work on logic for timer
-// weather: "",
-// temperature: null,
-// bodyTemp: 99,
-// health: 100
+export default connect(msp, { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20, waterTreeACreator, fillWell, upgradeWell, reducerWaterSupply })(Game)

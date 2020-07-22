@@ -1,10 +1,18 @@
-.game-view{
+.game-view {
     display: flex;
     flex-direction: column;
 }
 
 .sky {
-    flex: 1;
+    height: 300px;
+    width: 100%;
+    /* background-image: url('../images/sunny1.jpg'); */
+    
+}
+
+.sky-pic {
+    height: 500px;
+    width: 100%;
 }
 
 .game-data {
