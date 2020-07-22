@@ -9,6 +9,7 @@ import reducer from './reducer'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import Game from './Containers/Game'
+import GameOver from './Components/GameOver'
 
 const store = createStore(reducer, applyMiddleware(thunk))
 
@@ -19,8 +20,7 @@ ReactDOM.render(
         
                 <Route exact path="/"><App /> </Route>
                 <Route exact path="/game"><Game /> </Route>
-                {/* <Route path="/game" component={APP} /> */}
-            
+                <Route exact path="/GameOver"><GameOver /> </Route>           
         </Router>
     </Provider>
 

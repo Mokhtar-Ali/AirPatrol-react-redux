@@ -6,12 +6,16 @@ import {
     increaseScore, decreaseScore,
     moreFire, decreaseFire10, decreaseFire20,
     increaseHealth, decreaseHealth, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20,
-    fillWell, upgradeWell, reducerWaterSupply
+    fillWell, upgradeWell, reducerWaterSupply,
+    restartGame
+
 } from '../actionCreator'
+import { withRouter } from 'react-router-dom';
 import '../Css/game.css'
 import GameView from './GameView'
 import Sunny2 from '../images/sunny2.jpg'
 import Sunny1 from '../images/sunny1.jpg'
+import Sunny3 from '../images/sunny3.jpg'
 
 
 class Game extends React.Component {
@@ -22,75 +26,71 @@ class Game extends React.Component {
         weatherImage: null
     }
 
+    redirectToHome = () => {
+        this.props.history.push("/GameOver");
+       }
+
     componentWillMount() {
         if (this.props.currentUser) {
-            fetch("http://localhost:3000/atmospheres", {
-                method: "Post",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ user_id: this.props.currentUser.id })
-            })
-                .then(resp => resp.json())
-                .then(response => this.props.assignAtmosphere(response))
-        } //else { history.push('/') }
-
+           this.startGame()
+        }
     }
 
     componentDidMount() {
-        this.displayWeather()
+        // this.displayWeather()
 
-        setInterval(() => {
+        const weatherInt = setInterval(() => {
             this.displayWeather()
 
         }, 3000);
 
-        setInterval(() => {
+        const wellInt = setInterval(() => {
             if (this.state.weather === "Rainy  🌧") {
                 this.props.fillWell()
             }
         }, 1000)
 
-        setInterval(() => {
+        const fireInt = setInterval(() => {
             this.feedFire()
         }, 2000);
 
-        setInterval(() => {
+        const decreaseScoreInt = setInterval(() => {
             if (this.props.fire === 0 && this.props.score >= 5 && this.state.temperature < 60) {
                 this.props.decreaseScore()
             }
         }, 3000);
 
-        setInterval(() => {
+        const decreaseHealthInt = setInterval(() => {
             if (this.props.fire === 0 && this.props.health >= 10 && this.state.temperature < 60) {
                 this.props.decreaseHealth()
             }
         }, 3000)
 
-        setInterval(() => {
+        const decreaseBodyTempInt = setInterval(() => {
             if (this.props.fire === 0 && this.props.bodyTemp >= 66 && this.state.temperature < 60) {
                 this.props.decreaseBodyTempBy10()
             }
         }, 3000)
 
-        setInterval(() => {
+        const increaseHealthInt = setInterval(() => {
             if (this.props.fire > 0 && this.props.health <= 90) {
                 this.props.increaseHealth()
             }
         }, 3000)
 
-        setInterval(() => {
+        const increaseBodyTempBy10Int = setInterval(() => {
             if (this.props.fire > 0 && this.props.bodyTemp <= 88) {
                 this.props.increaseBodyTempBy10()
             }
         }, 3000)
 
-        setInterval(() => {
+        const gameInt = setInterval(() => {
             if (this.props.health <= 10) {
-                window.alert('Game Over')
-                // check for history.push
+                this.redirectToHome()
+                
+                clearInterval(weatherInt, wellInt, fireInt, decreaseScoreInt, decreaseHealthInt, decreaseBodyTempInt, increaseHealthInt, increaseBodyTempBy10Int, gameInt);
             }
-        }, 10000)
+        }, 1000)
     }
 
     componentDidUpdate() {
@@ -98,34 +98,55 @@ class Game extends React.Component {
         // window.alert('No More FireWood, Chop some trees')
     }
 
+    componentWillUnmount() {
+        this.props.restartGame()
+        fetch(`http://localhost:3000/atmospheres/${this.props.atmosphere.id}`, {
+            method: 'DELETE'
+        })
+    }
+
+    startGame = () => {
+        fetch("http://localhost:3000/atmospheres", {
+            method: "Post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ user_id: this.props.currentUser.id })
+        })
+            .then(resp => resp.json())
+            .then(response => this.props.assignAtmosphere(response))
+    } 
+
+
 
     displayWeather = () => {
+        const statsDiv = document.getElementById('stats')
         const weather = ["Sunny  ☀️", "Rainy  🌧", "Cloudy  🌫", "Snowy  ❄️"];
         const randomCondition = weather[Math.floor(Math.random() * weather.length)];
         this.setState({ weather: randomCondition })
 
 
         if (randomCondition === "Sunny  ☀️") {
-            this.setState({ temperature: (Math.floor(Math.random() * (90 - 50)) + 50)})
-            document.getElementById('stats').style.backgroundImage = `url(${Sunny1})` // change to sunny pic
-
+            this.setState({ temperature: (Math.floor(Math.random() * (90 - 50)) + 50) })
             if (this.props.bodyTemp <= 89) { this.props.increaseBodyTempBy10() }
+            statsDiv.style.backgroundImage = `url(${Sunny2})` // change to sunny pic
+
         } else if (randomCondition === "Rainy  🌧") {
             this.setState({ temperature: (Math.floor(Math.random() * (70 - 40)) + 40) })
-            document.getElementById('stats').style.backgroundImage = `url(${Sunny1})`// change to rain pic
-            
+            statsDiv.style.backgroundImage = `url(${Sunny3})`// change to rain pic
+
             if (this.props.bodyTemp <= 89) { this.props.increaseBodyTempBy10() }
 
         } else if (randomCondition === "Cloudy  🌫") {
             this.setState({ temperature: (Math.floor(Math.random() * (60 - 40)) + 40) })
             this.props.decreaseBodyTempBy10()
-            document.getElementById('stats').style.backgroundImage = `url(${Sunny1})` // change to cloudy pic
+            //    statsDiv.style.backgroundImage = `url(${Sunny1})` // change to cloudy pic
 
         } else {
             this.setState({ temperature: (Math.floor(Math.random() * (33 - 20)) + 20) })
 
             this.props.decreaseBodyTempBy20()
-            document.getElementById('stats').style.backgroundImage = `url(${Sunny1})` // change to snow pic
+            //    statsDiv.style.backgroundImage = `url(${Sunny1})` // change to snow pic
         }
     };
 
@@ -196,8 +217,8 @@ class Game extends React.Component {
             <div>
                 {
                     this.props.atmosphere ?
-                        <div className='game'>
-                            <div id='stats' style={{ backgroundImage:`url(${Sunny2})` }}>
+                        <div id='game'>
+                            <div id='stats' style={{ backgroundImage: `url(${Sunny1})` }} >
                                 <div className='left'>
                                     <p>Name: {this.props.currentUser.name}</p>
                                     <p>Score: {this.props.score}</p>
@@ -268,4 +289,4 @@ const msp = state => {
     }
 }
 
-export default connect(msp, { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20, waterTreeACreator, fillWell, upgradeWell, reducerWaterSupply })(Game)
+export default connect(msp, {restartGame, assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20, waterTreeACreator, fillWell, upgradeWell, reducerWaterSupply })(withRouter(Game))

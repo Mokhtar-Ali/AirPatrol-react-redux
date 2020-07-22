@@ -5,12 +5,12 @@ const defaultState = {
     treesNum: 10,
     atmosphere: null,
     timer: 180, // work on logic for timer
-    fireWood: 100,
-    fire: 100,
+    fireWood: 0,
+    fire: 0,
     weather: "",
     temperature: 0,
     bodyTemp: 98,
-    health: 100,
+    health: 40,
     treesChopped: 0,
     treesPlanted: 0,
     oxygen: 0,
@@ -22,6 +22,27 @@ const defaultState = {
 
 function reducer(state = defaultState, action) {
     switch (action.type) {
+
+        case 'RESTART_GAME': 
+            return {...state, 
+                trees: [],
+                score: 10,
+                treesNum: 10,
+                atmosphere: null,
+                timer: 180, // work on logic for timer
+                fireWood: 0,
+                fire: 0,
+                weather: "",
+                temperature: 0,
+                bodyTemp: 98,
+                health: 40,
+                treesChopped: 0,
+                treesPlanted: 0,
+                oxygen: 0,
+                carbon_dioxide: 0,
+                well: 'small',
+                water_supply: 0}
+                
         case 'INCREASE_SCORE':
             return { ...state, score: state.score += 10 }
         case 'DECREASE_SCORE':
