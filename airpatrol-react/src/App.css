@@ -24,6 +24,11 @@
   color: white;
 }
 
+.instructions-2{
+  height: 500px;
+  background-color: green;
+}
+
 .App-link {
   color: #61dafb;
 }

@@ -17,13 +17,15 @@ function Instructions() {
         <li>The oxygen level must be equal or above the carbon dioxoide levels or else YOU LOSE!</li>
       </ul>
       <br />
+      <br />
+      <br />
       <div>
         <footer>&copy; Copyright 2020 Jay & Mocha</footer>
       </div>
     </div>
 
   )
-
+ 
 }
 
 

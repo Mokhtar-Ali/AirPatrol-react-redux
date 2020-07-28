@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import './App.css';
+import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
 import Instructions from './Components/Instructions'
 import Signup from './Forms/Signup';
@@ -35,10 +36,12 @@ function App(props) {
     <div className="App">
       <Instructions />
       {props.currentUser ?
-        <button onClick={()=> history.push('/game')}> Start Game </button>
-        : <div>
+        <div className ='instructions-2'>
+          <Button className='app-button' variant="contained" color="Green" onClick={() => history.push('/game')}> Start Game </Button>
+        </div>
+        : <div className ='instructions-2'>
           {switchLoginToSignup ? <Signup /> : <Login />}
-          <button onClick={() => setswitchLoginSignup(!switchLoginToSignup)}>Switch to Signup</button>
+          <Button onClick={() => setswitchLoginSignup(!switchLoginToSignup)}>Switch to Signup</Button>
         </div>
       }
 
@@ -52,4 +55,4 @@ const msp = state => {
   }
 }
 
-export default connect(msp, {assignUser})(App)
+export default connect(msp, { assignUser })(App)
