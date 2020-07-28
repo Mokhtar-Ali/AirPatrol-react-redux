@@ -36,15 +36,16 @@ function App(props) {
     <div className="App">
       <Instructions />
       {props.currentUser ?
-        <div className ='instructions-2'>
+        <div className='instructions-2'>
           <Button className='app-button' variant="contained" color="Green" onClick={() => history.push('/game')}> Start Game </Button>
         </div>
-        : <div className ='instructions-2'>
+        : <div className='instructions-2'>
           {switchLoginToSignup ? <Signup /> : <Login />}
-          <Button onClick={() => setswitchLoginSignup(!switchLoginToSignup)}>Switch to Signup</Button>
+          <Button className='app-button' variant="contained" color="Green" onClick={() => setswitchLoginSignup(!switchLoginToSignup)}>Switch to Signup</Button>
+
         </div>
       }
-
+      <footer>&copy; Copyright 2020 Jay & Mocha</footer>
     </div>
   );
 }

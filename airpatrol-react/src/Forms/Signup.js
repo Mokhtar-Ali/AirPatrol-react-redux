@@ -46,10 +46,11 @@ class Signup extends React.Component {
         console.log(this.props.currentUser)
         return (
             <div className="Login">
+                <Button disabled> Start Game </Button>
                 <h3 style={{textAlign: 'center'}}>Create An Account</h3>
                 <form onSubmit={this.handleSubmit} id='form-login'>
                     <FormGroup controlId="email" bsSize="large">
-                        <label>Name</label>
+                    
                         <FormControl
                             id='name2'
                             autoFocus
@@ -58,10 +59,11 @@ class Signup extends React.Component {
                             placeholder='Name'
                             value={this.state.name}
                             onChange={this.handleChange}
+                            style={{textAlign: 'center'}}
                         />
                     </FormGroup>
                     <FormGroup controlId="password" bsSize="large">
-                        <label>Password</label>
+                        
                         <FormControl
                             id='password2'
                             type="password"
@@ -69,9 +71,10 @@ class Signup extends React.Component {
                             placeholder='Password'
                             value={this.state.password}
                             onChange={this.handleChange}
+                            style={{textAlign: 'center'}}
                         />
                     </FormGroup>
-                    <Button block bsSize="large" type="submit">
+                    <Button block bsSize="large" type="submit" style={{marginTop: '10px'}} >
                         Sign up
                     </Button>
                 </form>

@@ -20,7 +20,7 @@ function Instructions() {
       <br />
       <br />
       <div>
-        <footer>&copy; Copyright 2020 Jay & Mocha</footer>
+        
       </div>
     </div>
 

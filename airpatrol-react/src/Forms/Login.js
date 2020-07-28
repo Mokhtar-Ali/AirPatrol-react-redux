@@ -48,10 +48,11 @@ class LoginForm extends React.Component {
         return (
             
             <div className="Login">
+                <Button disabled> Start Game </Button>
                 <h3 style={{textAlign: 'center'}}>Log In To Play</h3>
                 <form onSubmit={this.handleSubmit} id='form'>
                     <FormGroup controlId="email" bssize="large">
-                        <label>Name</label>
+                        
                         <FormControl
                             autoFocus
                             type="text"
@@ -59,19 +60,21 @@ class LoginForm extends React.Component {
                             placeholder='Name'
                             value={this.state.name}
                             onChange={this.handleChange}
+                            style={{textAlign: 'center'}}
                         />
                     </FormGroup>
                     <FormGroup controlId="password" bsSize="large">
-                        <label>Password</label>
+                        
                         <FormControl
                             type="password"
                             name='password'
                             placeholder='Password'
                             value={this.state.password}
                             onChange={this.handleChange}
+                            style={{textAlign: 'center'}}
                         />
                     </FormGroup>
-                    <Button block bsSize="large" type="submit">
+                    <Button block bsSize="large" type="submit" style={{marginTop: '10px'}}>
                         Login
                     </Button>
                 </form>
