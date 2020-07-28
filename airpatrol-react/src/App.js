@@ -28,7 +28,7 @@ function App(props) {
           }
         });
     }
-  }, [])
+  })
 
 
   return (

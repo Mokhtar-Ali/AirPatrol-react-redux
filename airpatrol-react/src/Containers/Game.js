@@ -13,9 +13,10 @@ import {
 import { withRouter } from 'react-router-dom';
 import '../Css/game.css'
 import GameView from './GameView'
-import Sunny2 from '../images/sunny2.jpg'
-import Sunny1 from '../images/sunny1.jpg'
-import Sunny3 from '../images/sunny3.jpg'
+import Sunny from '../images/Sunny.png'
+import Rainy from '../images/Rainy.jpg'
+import Cloudy from '../images/Cloudy.png'
+import Snowy from '../images/Snowy.jpg'
 
 
 class Game extends React.Component {
@@ -23,7 +24,8 @@ class Game extends React.Component {
     state = {
         weather: null,
         temperature: null,
-        weatherImage: null
+        weatherImage: null,
+        ints: true
     }
 
     redirectToHome = () => {
@@ -37,8 +39,6 @@ class Game extends React.Component {
     }
 
     componentDidMount() {
-        // this.displayWeather()
-
         const weatherInt = setInterval(() => {
             this.displayWeather()
 
@@ -85,24 +85,26 @@ class Game extends React.Component {
         }, 3000)
 
         const gameInt = setInterval(() => {
-            if (this.props.health <= 10) {
+            if (this.props.health <= 10 ) {
                 this.redirectToHome()
                 
                 clearInterval(weatherInt, wellInt, fireInt, decreaseScoreInt, decreaseHealthInt, decreaseBodyTempInt, increaseHealthInt, increaseBodyTempBy10Int, gameInt);
             }
         }, 1000)
     }
+    
 
     componentDidUpdate() {
-
+        
         // window.alert('No More FireWood, Chop some trees')
     }
 
     componentWillUnmount() {
-        this.props.restartGame()
-        fetch(`http://localhost:3000/atmospheres/${this.props.atmosphere.id}`, {
-            method: 'DELETE'
-        })
+        this.setState({ints: false})
+        // this.props.restartGame()
+        // fetch(`http://localhost:3000/atmospheres/${this.props.atmosphere.id}`, {
+        //     method: 'DELETE'
+        // })
     }
 
     startGame = () => {
@@ -129,24 +131,24 @@ class Game extends React.Component {
         if (randomCondition === "Sunny  ☀️") {
             this.setState({ temperature: (Math.floor(Math.random() * (90 - 50)) + 50) })
             if (this.props.bodyTemp <= 89) { this.props.increaseBodyTempBy10() }
-            statsDiv.style.backgroundImage = `url(${Sunny2})` // change to sunny pic
+            statsDiv.style.backgroundImage = `url(${Sunny})` // change to sunny pic
 
         } else if (randomCondition === "Rainy  🌧") {
             this.setState({ temperature: (Math.floor(Math.random() * (70 - 40)) + 40) })
-            statsDiv.style.backgroundImage = `url(${Sunny3})`// change to rain pic
+            statsDiv.style.backgroundImage = `url(${Rainy})`// change to rain pic
 
             if (this.props.bodyTemp <= 89) { this.props.increaseBodyTempBy10() }
 
         } else if (randomCondition === "Cloudy  🌫") {
-            this.setState({ temperature: (Math.floor(Math.random() * (60 - 40)) + 40) })
+            this.setState({ temperature: (Math.floor(Math.random() * (70 - 40)) + 40) })
             this.props.decreaseBodyTempBy10()
-            //    statsDiv.style.backgroundImage = `url(${Sunny1})` // change to cloudy pic
+               statsDiv.style.backgroundImage = `url(${Cloudy})` // change to cloudy pic
 
         } else {
             this.setState({ temperature: (Math.floor(Math.random() * (33 - 20)) + 20) })
 
             this.props.decreaseBodyTempBy20()
-            //    statsDiv.style.backgroundImage = `url(${Sunny1})` // change to snow pic
+               statsDiv.style.backgroundImage = `url(${Snowy})` // change to snow pic
         }
     };
 
@@ -218,7 +220,7 @@ class Game extends React.Component {
                 {
                     this.props.atmosphere ?
                         <div id='game'>
-                            <div id='stats' style={{ backgroundImage: `url(${Sunny1})` }} >
+                            <div id='stats' style={{ backgroundImage: `url(${Sunny})` }} >
                                 <div className='left'>
                                     <p>Name: {this.props.currentUser.name}</p>
                                     <p>Score: {this.props.score}</p>
