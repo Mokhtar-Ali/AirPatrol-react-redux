@@ -30,77 +30,76 @@ class Game extends React.Component {
 
     redirectToHome = () => {
         this.props.history.push("/GameOver");
-       }
+    }
 
     componentWillMount() {
         if (this.props.currentUser) {
-           this.startGame()
+            this.startGame()
         }
     }
 
-    componentDidMount() {
-        const weatherInt = setInterval(() => {
-            this.displayWeather()
+    weatherInt = setInterval(() => {
+        this.displayWeather()
+    }, 3000);
 
-        }, 3000);
+    wellInt = setInterval(() => {
+        if (this.state.weather === "Rainy  🌧") {
+            this.props.fillWell()
+        }
+    }, 1000)
 
-        const wellInt = setInterval(() => {
-            if (this.state.weather === "Rainy  🌧") {
-                this.props.fillWell()
-            }
-        }, 1000)
+    fireInt = setInterval(() => {
+        this.feedFire()
+    }, 2000);
 
-        const fireInt = setInterval(() => {
-            this.feedFire()
-        }, 2000);
+    decreaseScoreInt = setInterval(() => {
+        if (this.props.fire === 0 && this.props.score >= 5 && this.state.temperature < 60) {
+            this.props.decreaseScore()
+        }
+    }, 3000);
 
-        const decreaseScoreInt = setInterval(() => {
-            if (this.props.fire === 0 && this.props.score >= 5 && this.state.temperature < 60) {
-                this.props.decreaseScore()
-            }
-        }, 3000);
+    decreaseHealthInt = setInterval(() => {
+        if (this.props.fire === 0 && this.props.health >= 10 && this.state.temperature < 60) {
+            this.props.decreaseHealth()
+        }
+    }, 3000)
 
-        const decreaseHealthInt = setInterval(() => {
-            if (this.props.fire === 0 && this.props.health >= 10 && this.state.temperature < 60) {
-                this.props.decreaseHealth()
-            }
-        }, 3000)
+    decreaseBodyTempInt = setInterval(() => {
+        if (this.props.fire === 0 && this.props.bodyTemp >= 66 && this.state.temperature < 60) {
+            this.props.decreaseBodyTempBy10()
+        }
+    }, 3000)
 
-        const decreaseBodyTempInt = setInterval(() => {
-            if (this.props.fire === 0 && this.props.bodyTemp >= 66 && this.state.temperature < 60) {
-                this.props.decreaseBodyTempBy10()
-            }
-        }, 3000)
+    increaseHealthInt = setInterval(() => {
+        if (this.props.fire > 0 && this.props.health <= 90) {
+            this.props.increaseHealth()
+        }
+    }, 3000)
 
-        const increaseHealthInt = setInterval(() => {
-            if (this.props.fire > 0 && this.props.health <= 90) {
-                this.props.increaseHealth()
-            }
-        }, 3000)
+    increaseBodyTempBy10Int = setInterval(() => {
+        if (this.props.fire > 0 && this.props.bodyTemp <= 88) {
+            this.props.increaseBodyTempBy10()
+        }
+    }, 3000)
 
-        const increaseBodyTempBy10Int = setInterval(() => {
-            if (this.props.fire > 0 && this.props.bodyTemp <= 88) {
-                this.props.increaseBodyTempBy10()
-            }
-        }, 3000)
+    gameInt = setInterval(() => {
+        if (this.props.health <= 10 && !this.props.atmosphere) {
+            this.redirectToHome()
 
-        const gameInt = setInterval(() => {
-            if (this.props.health <= 10 ) {
-                this.redirectToHome()
-                
-                clearInterval(weatherInt, wellInt, fireInt, decreaseScoreInt, decreaseHealthInt, decreaseBodyTempInt, increaseHealthInt, increaseBodyTempBy10Int, gameInt);
-            }
-        }, 1000)
-    }
-    
+            clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
+        }
+    }, 1000)
+
+
 
     componentDidUpdate() {
-        
+
         // window.alert('No More FireWood, Chop some trees')
     }
 
     componentWillUnmount() {
-        this.setState({ints: false})
+        this.props.restartGame()
+        clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
         // this.props.restartGame()
         // fetch(`http://localhost:3000/atmospheres/${this.props.atmosphere.id}`, {
         //     method: 'DELETE'
@@ -117,7 +116,7 @@ class Game extends React.Component {
         })
             .then(resp => resp.json())
             .then(response => this.props.assignAtmosphere(response))
-    } 
+    }
 
 
 
@@ -142,13 +141,13 @@ class Game extends React.Component {
         } else if (randomCondition === "Cloudy  🌫") {
             this.setState({ temperature: (Math.floor(Math.random() * (70 - 40)) + 40) })
             this.props.decreaseBodyTempBy10()
-               statsDiv.style.backgroundImage = `url(${Cloudy})` // change to cloudy pic
+            statsDiv.style.backgroundImage = `url(${Cloudy})` // change to cloudy pic
 
         } else {
             this.setState({ temperature: (Math.floor(Math.random() * (33 - 20)) + 20) })
 
             this.props.decreaseBodyTempBy20()
-               statsDiv.style.backgroundImage = `url(${Snowy})` // change to snow pic
+            statsDiv.style.backgroundImage = `url(${Snowy})` // change to snow pic
         }
     };
 
@@ -291,4 +290,4 @@ const msp = state => {
     }
 }
 
-export default connect(msp, {restartGame, assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20, waterTreeACreator, fillWell, upgradeWell, reducerWaterSupply })(withRouter(Game))
+export default connect(msp, { restartGame, assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20, waterTreeACreator, fillWell, upgradeWell, reducerWaterSupply })(withRouter(Game))

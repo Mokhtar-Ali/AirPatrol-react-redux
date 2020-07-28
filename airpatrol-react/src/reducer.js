@@ -25,23 +25,23 @@ function reducer(state = defaultState, action) {
 
         case 'RESTART_GAME': 
             return {...state, 
-                trees: [],
-                score: 10,
-                treesNum: 10,
+                trees: null,
+                score: null,
+                treesNum: null,
                 atmosphere: null,
                 timer: 180, // work on logic for timer
-                fireWood: 0,
-                fire: 0,
-                weather: "",
-                temperature: 0,
-                bodyTemp: 98,
-                health: 40,
-                treesChopped: 0,
-                treesPlanted: 0,
-                oxygen: 0,
-                carbon_dioxide: 0,
-                well: 'small',
-                water_supply: 0}
+                fireWood: null,
+                fire: null,
+                weather: null,
+                temperature: null,
+                bodyTemp: null,
+                health: null,
+                treesChopped: null,
+                treesPlanted: null,
+                oxygen: null,
+                carbon_dioxide: null,
+                well: null,
+                water_supply: null}
                 
         case 'INCREASE_SCORE':
             return { ...state, score: state.score += 10 }
@@ -55,7 +55,7 @@ function reducer(state = defaultState, action) {
             let oxygen = action.payload.oxygen
             let carbon_dioxide = action.payload.carbon_dioxide
             action.payload.trees.map(tree => {
-                oxygen += tree.oxygen
+                return oxygen += tree.oxygen
                 // carbon_dioxide += tree.carbon_dioxide
             })
             return { ...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: oxygen, carbon_dioxide: carbon_dioxide }
