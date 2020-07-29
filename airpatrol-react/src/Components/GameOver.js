@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 class GameOver extends React.Component {
 
     startGame = () => {
-        this.props.history.push('/game')
+        this.props.history.push('/')
     }
     
     render(){

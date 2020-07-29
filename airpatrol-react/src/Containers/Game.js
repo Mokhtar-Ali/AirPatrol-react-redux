@@ -22,14 +22,12 @@ import Snowy from '../images/Snowy.jpg'
 class Game extends React.Component {
 
     state = {
-        weather: null,
-        temperature: null,
-        weatherImage: null,
-        ints: true
+        weather: "Sunny  ☀️",
+        temperature: 50,
     }
 
     redirectToHome = () => {
-        this.props.history.push("/GameOver");
+        this.props.history.push("/");
     }
 
     componentWillMount() {
@@ -37,74 +35,86 @@ class Game extends React.Component {
             this.startGame()
         }
     }
+    componentWillUnmount() {
+        this.props.restartGame()
+        clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
+        // this.props.history.push("/GameOver");
+
+        // fetch(`http://localhost:3000/atmospheres/${this.props.atmosphere.id}`, {
+        //     method: 'DELETE'
+        // })
+    }
 
     weatherInt = setInterval(() => {
         this.displayWeather()
-    }, 3000);
+    }, 20000);
 
     wellInt = setInterval(() => {
         if (this.state.weather === "Rainy  🌧") {
             this.props.fillWell()
         }
-    }, 1000)
+    }, 5000)
 
     fireInt = setInterval(() => {
         this.feedFire()
-    }, 2000);
+    }, 4000);
 
     decreaseScoreInt = setInterval(() => {
         if (this.props.fire === 0 && this.props.score >= 5 && this.state.temperature < 60) {
             this.props.decreaseScore()
         }
-    }, 3000);
+    }, 4000);
 
     decreaseHealthInt = setInterval(() => {
-        if (this.props.fire === 0 && this.props.health >= 10 && this.state.temperature < 60) {
+        if (this.props.fire === 0 && this.props.health >= 10 && this.state.temperature < 70) {
             this.props.decreaseHealth()
         }
-    }, 3000)
+    }, 4000)
 
     decreaseBodyTempInt = setInterval(() => {
         if (this.props.fire === 0 && this.props.bodyTemp >= 66 && this.state.temperature < 60) {
             this.props.decreaseBodyTempBy10()
         }
-    }, 3000)
+    }, 4000)
 
     increaseHealthInt = setInterval(() => {
         if (this.props.fire > 0 && this.props.health <= 90) {
             this.props.increaseHealth()
         }
-    }, 3000)
+    }, 4000)
 
     increaseBodyTempBy10Int = setInterval(() => {
         if (this.props.fire > 0 && this.props.bodyTemp <= 88) {
             this.props.increaseBodyTempBy10()
         }
-    }, 3000)
+    }, 4000)
 
     gameInt = setInterval(() => {
-        if (this.props.health <= 10 && !this.props.atmosphere) {
-            this.redirectToHome()
-
+        if (this.props.health <= 10 ) {
             clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
+            // window.alert('GAME OVER')
+            document.getElementById('game').innerHTML = `
+                <h4>Game Over</h4>
+                <p>Name: ${this.props.currentUser.name}</p>
+                <p>Score: ${this.props.score}</p>
+                <p>Health: ${this.props.health} % </p>
+                <p>Oxygen: ${this.props.oxygen} </p>
+                <p>Carbon Dioxide: ${this.props.carbon_dioxide} </p>
+                <p>Trees Planted: ${this.props.trees.length}</p>
+                <p>Trees Chopped: ${this.props.treesChopped}</p>
+                <p>Firewood: ${this.props.fireWood}</p>
+                
+            `
         }
-    }, 1000)
+    }, 4000)
 
+    clearGameInt = setInterval(() => {
+        if (this.props.health === 0 ) {
+            clearInterval(this.gameInt)
+            this.redirectToHome()
+        }
+    },5000)
 
-
-    componentDidUpdate() {
-
-        // window.alert('No More FireWood, Chop some trees')
-    }
-
-    componentWillUnmount() {
-        this.props.restartGame()
-        clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
-        // this.props.restartGame()
-        // fetch(`http://localhost:3000/atmospheres/${this.props.atmosphere.id}`, {
-        //     method: 'DELETE'
-        // })
-    }
 
     startGame = () => {
         fetch("http://localhost:3000/atmospheres", {

@@ -16,15 +16,17 @@ const defaultState = {
     oxygen: 0,
     carbon_dioxide: 0,
     well: 'small',
-    water_supply: 0
+    water_supply: 5
 
 }
 
 function reducer(state = defaultState, action) {
     switch (action.type) {
 
-        case 'RESTART_GAME': 
-            return {...state, 
+        case 'RESTART_GAME':
+            return {
+                ...state,
+                currentUser: null,
                 trees: null,
                 score: null,
                 treesNum: null,
@@ -41,8 +43,32 @@ function reducer(state = defaultState, action) {
                 oxygen: null,
                 carbon_dioxide: null,
                 well: null,
-                water_supply: null}
-                
+                water_supply: null
+            }
+
+        case 'ASSIGN_ATMOSPHERE':
+            let oxygen = action.payload.oxygen
+            let carbon_dioxide = action.payload.carbon_dioxide
+            action.payload.trees.map(tree => {
+                return oxygen += tree.oxygen
+                // carbon_dioxide += tree.carbon_dioxide
+            })
+            return { ...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: oxygen, carbon_dioxide: carbon_dioxide,     
+                score: 10,
+                treesNum: 10,
+                timer: 180, // work on logic for timer
+                fireWood: 0,
+                fire: 0,
+                weather: "",
+                temperature: 0,
+                bodyTemp: 98,
+                health: 30,
+                treesChopped: 0,
+                treesPlanted: 0,
+                well: 'small',
+                water_supply: 5 
+            }
+
         case 'INCREASE_SCORE':
             return { ...state, score: state.score += 10 }
         case 'DECREASE_SCORE':
@@ -51,14 +77,6 @@ function reducer(state = defaultState, action) {
             return { ...state, currentUser: action.payload }
         case 'REMOVE_USER':
             return { ...state, currentUser: null }
-        case 'ASSIGN_ATMOSPHERE':
-            let oxygen = action.payload.oxygen
-            let carbon_dioxide = action.payload.carbon_dioxide
-            action.payload.trees.map(tree => {
-                return oxygen += tree.oxygen
-                // carbon_dioxide += tree.carbon_dioxide
-            })
-            return { ...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: oxygen, carbon_dioxide: carbon_dioxide }
 
         case 'PLANT_TREE':
             return { ...state, trees: [...state.trees, action.payload], oxygen: state.oxygen += action.payload.oxygen, carbon_dioxide: state.carbon_dioxide += action.payload.carbon_dioxide, treesNum: state.treesNum += 1, treesPlanted: state.treesPlanted += 1 }
@@ -101,23 +119,23 @@ function reducer(state = defaultState, action) {
             return { ...state, bodyTemp: state.bodyTemp += 20 }
 
         case 'FILL_WELL':
-            if(state.well === 'small'){
-                return {...state, water_supply: 5}
-            }else if(state.well === 'medium'){
-                return {...state, water_supply: 10}
-            }else {
-                return {...state, water_supply: 15}
-        
+            if (state.well === 'small') {
+                return { ...state, water_supply: 5 }
+            } else if (state.well === 'medium') {
+                return { ...state, water_supply: 10 }
+            } else {
+                return { ...state, water_supply: 15 }
+
             }
         case 'UPGRADE_WELL':
-            if(state.well === 'small' && state.fireWood >= 10 ){
-                return {...state, well: 'medium', fireWood: state.fireWood -= 10}
-            }else if (state.well === 'medium' && state.fireWood >= 20 ){
-                return {...state, well: 'Large', fireWood: state.fireWood -= 20}
+            if (state.well === 'small' && state.fireWood >= 10) {
+                return { ...state, well: 'medium', fireWood: state.fireWood -= 10 }
+            } else if (state.well === 'medium' && state.fireWood >= 20) {
+                return { ...state, well: 'Large', fireWood: state.fireWood -= 20 }
             }
 
         case 'REDUCE_WATER_SUPPLY':
-            return {...state, water_supply: state.water_supply -= 1}
+            return { ...state, water_supply: state.water_supply -= 1 }
         default:
             return state
     }
