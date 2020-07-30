@@ -1,9 +1,12 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom';
+import { restartGame } from '../actionCreator'
+import { connect } from 'react-redux'
 
 class GameOver extends React.Component {
 
     startGame = () => {
+        this.props.restartGame()
         this.props.history.push('/')
     }
     
@@ -17,4 +20,4 @@ class GameOver extends React.Component {
     }
 }
 
-export default withRouter(GameOver)
+export default connect(null, { restartGame })(withRouter(GameOver))

@@ -9,10 +9,13 @@ import Login from './Forms/Login';
 import { assignUser } from './actionCreator'
 
 function App(props) {
+  // window.location.reload(true)
+
   const [switchLoginToSignup, setswitchLoginSignup] = useState(false)
   const history = useHistory()
 
   useEffect(() => {
+    // window.location.reload()
     const user_id = localStorage.user_id;
     if (user_id) {
       fetch("http://localhost:3000/auto_login", {

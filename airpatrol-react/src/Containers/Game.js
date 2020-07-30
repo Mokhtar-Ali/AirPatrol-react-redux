@@ -27,22 +27,7 @@ class Game extends React.Component {
     }
 
     redirectToHome = () => {
-        this.props.history.push("/");
-    }
-
-    componentWillMount() {
-        if (this.props.currentUser) {
-            this.startGame()
-        }
-    }
-    componentWillUnmount() {
-        this.props.restartGame()
-        clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
-        // this.props.history.push("/GameOver");
-
-        // fetch(`http://localhost:3000/atmospheres/${this.props.atmosphere.id}`, {
-        //     method: 'DELETE'
-        // })
+        this.props.history.push("GameOver");
     }
 
     weatherInt = setInterval(() => {
@@ -92,28 +77,40 @@ class Game extends React.Component {
     gameInt = setInterval(() => {
         if (this.props.health <= 10 ) {
             clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
-            // window.alert('GAME OVER')
-            document.getElementById('game').innerHTML = `
-                <h4>Game Over</h4>
-                <p>Name: ${this.props.currentUser.name}</p>
-                <p>Score: ${this.props.score}</p>
-                <p>Health: ${this.props.health} % </p>
-                <p>Oxygen: ${this.props.oxygen} </p>
-                <p>Carbon Dioxide: ${this.props.carbon_dioxide} </p>
-                <p>Trees Planted: ${this.props.trees.length}</p>
-                <p>Trees Chopped: ${this.props.treesChopped}</p>
-                <p>Firewood: ${this.props.fireWood}</p>
+            this.redirectToHome()
+        //     // window.alert('GAME OVER')
+        //     document.getElementById('game').innerHTML = `
+        //         <h4>Game Over</h4>
+        //         <p>Name: ${this.props.currentUser.name}</p>
+        //         <p>Score: ${this.props.score}</p>
+        //         <p>Health: ${this.props.health} % </p>
+        //         <p>Oxygen: ${this.props.oxygen} </p>
+        //         <p>Carbon Dioxide: ${this.props.carbon_dioxide} </p>
+        //         <p>Trees Planted: ${this.props.trees.length}</p>
+        //         <p>Trees Chopped: ${this.props.treesChopped}</p>
+        //         <p>Firewood: ${this.props.fireWood}</p>
                 
-            `
+        //     `
         }
     }, 4000)
 
-    clearGameInt = setInterval(() => {
-        if (this.props.health === 0 ) {
-            clearInterval(this.gameInt)
-            this.redirectToHome()
+    componentWillMount() {
+        if (this.props.currentUser) {
+            this.startGame()
         }
-    },5000)
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.gameInt, this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
+    }
+    
+
+    // clearGameInt = setInterval(() => {
+    //     if (this.props.health === 0 ) {
+    //         clearInterval(this.gameInt)
+    //         this.props.restartGame()
+    //     }
+    // },1000)
 
 
     startGame = () => {

@@ -5,8 +5,8 @@ const defaultState = {
     treesNum: 10,
     atmosphere: null,
     timer: 180, // work on logic for timer
-    fireWood: 10,
-    fire: 100,
+    fireWood: 0,
+    fire: 0,
     weather: "",
     temperature: 0,
     bodyTemp: 98,
@@ -24,27 +24,28 @@ function reducer(state = defaultState, action) {
     switch (action.type) {
 
         case 'RESTART_GAME':
+            console.log(state)
             return {
                 ...state,
-                currentUser: null,
-                trees: null,
-                score: null,
-                treesNum: null,
+                trees: [],
+                score: 10,
+                treesNum: 10,
                 atmosphere: null,
                 timer: 180, // work on logic for timer
-                fireWood: null,
-                fire: null,
-                weather: null,
-                temperature: null,
-                bodyTemp: null,
-                health: null,
-                treesChopped: null,
-                treesPlanted: null,
-                oxygen: null,
-                carbon_dioxide: null,
-                well: null,
-                water_supply: null
+                fireWood: 0,
+                fire: 0,
+                weather: "",
+                temperature: 0,
+                bodyTemp: 98,
+                health: 100,
+                treesChopped: 0,
+                treesPlanted: 0,
+                oxygen: 0,
+                carbon_dioxide: 0,
+                well: 'small',
+                water_supply: 5
             }
+            
 
         case 'ASSIGN_ATMOSPHERE':
             let oxygen = action.payload.oxygen
@@ -53,21 +54,8 @@ function reducer(state = defaultState, action) {
                 return oxygen += tree.oxygen
                 // carbon_dioxide += tree.carbon_dioxide
             })
-            return { ...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: oxygen, carbon_dioxide: carbon_dioxide,     
-                score: 10,
-                treesNum: 10,
-                timer: 180, // work on logic for timer
-                fireWood: 0,
-                fire: 0,
-                weather: "",
-                temperature: 0,
-                bodyTemp: 98,
-                health: 30,
-                treesChopped: 0,
-                treesPlanted: 0,
-                well: 'small',
-                water_supply: 5 
-            }
+            return {
+                ...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: oxygen, carbon_dioxide: carbon_dioxide }
 
         case 'INCREASE_SCORE':
             return { ...state, score: state.score += 10 }
