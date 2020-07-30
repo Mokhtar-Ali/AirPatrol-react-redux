@@ -30,69 +30,7 @@ class Game extends React.Component {
         this.props.history.push("GameOver");
     }
 
-    weatherInt = setInterval(() => {
-        this.displayWeather()
-    }, 20000);
 
-    wellInt = setInterval(() => {
-        if (this.state.weather === "Rainy  🌧") {
-            this.props.fillWell()
-        }
-    }, 5000)
-
-    fireInt = setInterval(() => {
-        this.feedFire()
-    }, 4000);
-
-    decreaseScoreInt = setInterval(() => {
-        if (this.props.fire === 0 && this.props.score >= 5 && this.state.temperature < 60) {
-            this.props.decreaseScore()
-        }
-    }, 4000);
-
-    decreaseHealthInt = setInterval(() => {
-        if (this.props.fire === 0 && this.props.health >= 10 && this.state.temperature < 70) {
-            this.props.decreaseHealth()
-        }
-    }, 4000)
-
-    decreaseBodyTempInt = setInterval(() => {
-        if (this.props.fire === 0 && this.props.bodyTemp >= 66 && this.state.temperature < 60) {
-            this.props.decreaseBodyTempBy10()
-        }
-    }, 4000)
-
-    increaseHealthInt = setInterval(() => {
-        if (this.props.fire > 0 && this.props.health <= 90) {
-            this.props.increaseHealth()
-        }
-    }, 4000)
-
-    increaseBodyTempBy10Int = setInterval(() => {
-        if (this.props.fire > 0 && this.props.bodyTemp <= 88) {
-            this.props.increaseBodyTempBy10()
-        }
-    }, 4000)
-
-    gameInt = setInterval(() => {
-        if (this.props.health <= 10 ) {
-            clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
-            this.redirectToHome()
-        //     // window.alert('GAME OVER')
-        //     document.getElementById('game').innerHTML = `
-        //         <h4>Game Over</h4>
-        //         <p>Name: ${this.props.currentUser.name}</p>
-        //         <p>Score: ${this.props.score}</p>
-        //         <p>Health: ${this.props.health} % </p>
-        //         <p>Oxygen: ${this.props.oxygen} </p>
-        //         <p>Carbon Dioxide: ${this.props.carbon_dioxide} </p>
-        //         <p>Trees Planted: ${this.props.trees.length}</p>
-        //         <p>Trees Chopped: ${this.props.treesChopped}</p>
-        //         <p>Firewood: ${this.props.fireWood}</p>
-                
-        //     `
-        }
-    }, 4000)
 
     componentWillMount() {
         if (this.props.currentUser) {
@@ -220,6 +158,70 @@ class Game extends React.Component {
         }
     }
 
+    weatherInt = setInterval(() => {
+        this.displayWeather()
+    }, 20000);
+
+    wellInt = setInterval(() => {
+        if (this.state.weather === "Rainy  🌧") {
+            this.props.fillWell()
+        }
+    }, 5000)
+
+    fireInt = setInterval(() => {
+        this.feedFire()
+    }, 4000);
+
+    decreaseScoreInt = setInterval(() => {
+        if (this.props.fire === 0 && this.props.score >= 5 && this.state.temperature < 60) {
+            this.props.decreaseScore()
+        }
+    }, 4000);
+
+    decreaseHealthInt = setInterval(() => {
+        if (this.props.fire === 0 && this.props.health >= 10 && this.state.temperature < 70) {
+            this.props.decreaseHealth()
+        }
+    }, 4000)
+
+    decreaseBodyTempInt = setInterval(() => {
+        if (this.props.fire === 0 && this.props.bodyTemp >= 66 && this.state.temperature < 60) {
+            this.props.decreaseBodyTempBy10()
+        }
+    }, 4000)
+
+    increaseHealthInt = setInterval(() => {
+        if (this.props.fire > 0 && this.props.health <= 90) {
+            this.props.increaseHealth()
+        }
+    }, 4000)
+
+    increaseBodyTempBy10Int = setInterval(() => {
+        if (this.props.fire > 0 && this.props.bodyTemp <= 88) {
+            this.props.increaseBodyTempBy10()
+        }
+    }, 4000)
+
+    // gameInt = setInterval(() => {
+    //     if (this.props.health <= 10 ) {
+    //         clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
+    //         this.redirectToHome()
+    //     //     // window.alert('GAME OVER')
+    //     //     document.getElementById('game').innerHTML = `
+    //     //         <h4>Game Over</h4>
+    //     //         <p>Name: ${this.props.currentUser.name}</p>
+    //     //         <p>Score: ${this.props.score}</p>
+    //     //         <p>Health: ${this.props.health} % </p>
+    //     //         <p>Oxygen: ${this.props.oxygen} </p>
+    //     //         <p>Carbon Dioxide: ${this.props.carbon_dioxide} </p>
+    //     //         <p>Trees Planted: ${this.props.trees.length}</p>
+    //     //         <p>Trees Chopped: ${this.props.treesChopped}</p>
+    //     //         <p>Firewood: ${this.props.fireWood}</p>
+                
+    //     //     `
+    //     }
+    // }, 4000)
+
     render() {
         return (
             <div>
@@ -264,7 +266,6 @@ class Game extends React.Component {
                             </div> {/* End Stats div*/}
                             {/* <div style={{backgroundImage: Sunny1, height:'100%', width: '100%'}}> </div> */}
                             <GameView
-                                weatherImage={this.state.weatherImage}
                             />
                         </div> // {/* End Game div */}
 

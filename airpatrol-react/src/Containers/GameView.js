@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import '../Css/gameView.css'
+import Tree from '../Components/Tree'
 
 
 class GameView extends React.Component {
@@ -9,25 +10,28 @@ class GameView extends React.Component {
     render() {
         return (
             <div className='game-view' >
-                <div className='sky'>  
-                <image className='sky-pic' />
+                <div className='trees'>
+                    {this.props.trees.map(tree =>
+                        <Tree
+                            tree={tree}
+                            key={tree.id}
+                        />
+                    )}
                 </div>
-                <div className='game-data'>
-                    <div className='left-side'> left-side</div>
-                    <div className='habitation'>
-                        <div className='green-space'>green-space</div>
-                        <div className='person-space'>
-                            <div className='health-bar'>health-bar</div>
-                            <div className='person'> person</div>
-                            <div className='fire'>fire</div>
-                            <div className='fire-health'>fire-health</div>
-                        </div>
-                    </div>
-                    <div className='right-side'>Trees</div>
+                <div className='data'>
+                    <div className='well'></div>
+                    <div className='person'></div>
+                    <div className='fire'></div>
+                    <div className='fire-wood'></div>
                 </div>
             </div>
         )
     }
 }
 
-export default connect(null)(GameView)
+const msp = (state) => {
+    return {
+        trees: state.trees
+    }
+}
+export default connect(msp)(GameView)

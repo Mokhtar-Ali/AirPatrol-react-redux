@@ -1,61 +1,35 @@
 .game-view {
-    display: flex;
-    flex-direction: column;
+   display: flex;
+   flex-direction: column;
+   height: 550px ;
+   width: 100%;
+   background-image: url('../images/landscape.png');
+   background-repeat: no-repeat;
+   /* position: relative; */
+   /* bottom: 20px; */
 }
 
-.sky {
-    height: 300px;
-    width: 100%;
-    /* background-image: url('../images/sunny1.jpg'); */
-    
+.trees{
+ flex: 2;
+ border: black 2px solid;
+ display: flex;
+ flex-direction: row;
 }
 
-.sky-pic {
-    height: 500px;
-    width: 100%;
-}
-
-.game-data {
-    flex: 2;
-    display: flex;
-    flex-direction: row;
-}
-
-.left-side{
-    flex: 1;
-}
-
-.habitation {
-    flex: 2;
-    flex-direction: column;
-}
-
-.green-space {
-
-}
-
-.person-space{
+.data{
     display: flex;
     flex-direction: row;
-}
-
-.health-bar {
-    flex: 1;
-}
-.person{
-    flex: 3;
-}
-
-.fire {
-    flex: 2;
-}
-
-.fire-health{
-    flex: 1;
+    flex:3; 
+    border: black 2px solid;
 }
 
 
-
-.right-side{
-    flex: 1;
+.tree{
+    height: 100px;
+    width: 100px;
+}
+.tree-img {
+    background-image: url('../images/Tree.png');
+    height: 100px;
+    width: 100px;
 }
