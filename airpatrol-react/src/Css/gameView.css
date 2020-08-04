@@ -1,28 +1,20 @@
 .game-view {
    display: flex;
    flex-direction: column;
-   height: 550px ;
-   width: 100%;
-   background-image: url('../images/landscape.png');
-   background-repeat: no-repeat;
+   height: 800px ;
+   width: 100% ;
+   background-image: url('../images/Grass.png');
+   /* background-repeat: no-repeat; */
    /* position: relative; */
    /* bottom: 20px; */
 }
 
-
-.data{
-    display: flex;
-    flex-direction: row;
-    flex:3; 
-    border: black 2px solid;
-}
-
 .trees{
  flex: 2;
- border: black 2px solid;
  display: flex;
  flex-wrap: wrap;
  align-content: flex-start;
+ margin-top: 10px;
 }
 
 .tree{
@@ -31,6 +23,66 @@
 }
 .tree-img {
     /* background-image: url('../images/Tree.png'); */
+    height: 100px;
+    width: 90px;
+}
+
+.data{
+    display: flex;
+    flex-direction: row;
+    flex:3; 
+    border: black 1px solid;
+
+}
+
+.well-container{
+    height: 400px;
+    width: 400px;
+}
+.well{
+    margin-top: 25%;
+    height: 250px;
+    width: 250px;
+
+}
+
+.person{
+    border: black 1px solid;
+    display: flex;
+    flex: 2;
+    flex-direction: row;
+    height: 400px;
+    width: 400px;
+}
+
+.tent{
+    height: 300px;
+    margin-top: 100px;
+}
+
+.fire-container {
+    height: 400px;
+    width: 400px;
+    border: black 1px solid;
+}
+.fire {
+    height: 150px;
+    width: 150px;
+    border: black 1px solid;
+    margin-top:62%;
+}
+
+.fire-wood-container{
+    border: black 1px solid;
+    height: 400px;
+    width: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    
+}
+.fire-wood{
+    border: black 1px solid;
     height: 100px;
     width: 100px;
 }
