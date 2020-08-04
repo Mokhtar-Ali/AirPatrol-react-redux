@@ -9,12 +9,6 @@
    /* bottom: 20px; */
 }
 
-.trees{
- flex: 2;
- border: black 2px solid;
- display: flex;
- flex-direction: row;
-}
 
 .data{
     display: flex;
@@ -23,13 +17,20 @@
     border: black 2px solid;
 }
 
+.trees{
+ flex: 2;
+ border: black 2px solid;
+ display: flex;
+ flex-wrap: wrap;
+ align-content: flex-start;
+}
 
 .tree{
     height: 100px;
     width: 100px;
 }
 .tree-img {
-    background-image: url('../images/Tree.png');
+    /* background-image: url('../images/Tree.png'); */
     height: 100px;
     width: 100px;
 }
