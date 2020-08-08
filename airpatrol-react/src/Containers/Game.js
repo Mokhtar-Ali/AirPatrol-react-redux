@@ -36,7 +36,7 @@ class Game extends React.Component {
         if (this.props.currentUser) {
             this.startGame()
         }
-    }
+    } 
 
     componentWillUnmount(){
         clearInterval(this.gameInt, this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
@@ -98,21 +98,22 @@ class Game extends React.Component {
 
     plantTree = () => {
         let data = { atmosphere_id: this.props.atmosphere.id };
-        if (this.state.temperature >= 50) {
+        if (this.props.water_supply >= 1) {
             this.props.addTree(data)
             this.props.increaseScore()
+            this.props.reducerWaterSupply()
         } else {
-            window.alert("It's too cold to plant tress now")
+            window.alert('No water, wait for the rain, or upgrade Well Size')
         }
     }
 
     chopTree = () => {
-        if (this.props.trees.length > 1) {
+        if (this.props.trees.length >= 1) {
             let treesCopy = [...this.props.trees]
             let id = treesCopy[treesCopy.length - 1].id
             this.props.cutTree(id)
         } else {
-            // window.alert('no more trees to cut, better plant some')
+            window.alert('no more trees to cut, better plant some')
         }
     }
 

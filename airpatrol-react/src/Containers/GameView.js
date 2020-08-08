@@ -5,6 +5,8 @@ import Tree from '../Components/Tree'
 import Well from '../images/Well.png'
 import Tent from '../images/Tent.png'
 import Fire from '../images/Fire.png'
+import FirePit1 from '../images/fire-pit1.png'
+import FirePit2 from '../images/fire-pit2.png'
 import Firewood from '../images/Firewood.png'
 
 
@@ -12,7 +14,7 @@ class GameView extends React.Component {
 
     renderFireWoood = () => {
         let fireWood = this.props.fireWood
-        
+
     }
 
     render() {
@@ -34,10 +36,13 @@ class GameView extends React.Component {
                         <img className='tent' src={Tent} />
                     </div>
                     <div className='fire-container'>
-                        <img className='fire' src={Fire} />
+                        {this.props.fire ?
+                            <img className='fire' src={Fire} />
+                            :<img className='fire' src={FirePit1} />
+                        }
                     </div>
                     <div className='fire-wood-container'>
-                            <img className='fire-wood' src={Firewood} />
+                        <img className='fire-wood' src={Firewood} />
                     </div>
                 </div>
             </div>
@@ -48,7 +53,8 @@ class GameView extends React.Component {
 const msp = (state) => {
     return {
         trees: state.trees,
-        fireWood: state.fireWood
+        fireWood: state.fireWood,
+        fire: state.fire
     }
 }
 export default connect(msp)(GameView)
