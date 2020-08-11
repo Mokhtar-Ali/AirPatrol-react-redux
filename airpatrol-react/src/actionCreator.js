@@ -7,7 +7,7 @@ export const removeUser = () => ({ type: 'REMOVE_USER' })
 export const assignAtmosphere = (atmosphere) => ({ type: 'ASSIGN_ATMOSPHERE', payload: atmosphere, trees: atmosphere.trees, oxygen: atmosphere.oxygen, carbon_dioxide: atmosphere.carbon_dioxide })
 
 export const addTree = (data) => dispatch => {
-  fetch(TreesApi, {
+  fetch(TreesApi, { 
     method: "POST",
     headers: {
       "Content-Type": "application/json"

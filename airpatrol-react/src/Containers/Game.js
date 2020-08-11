@@ -24,6 +24,7 @@ class Game extends React.Component {
     state = {
         weather: "Sunny  ☀️",
         temperature: 50,
+        alerts: 'Welcome to Air Patrol, Help us Save the Environment!!'
     }
 
     redirectToHome = () => {
@@ -36,12 +37,12 @@ class Game extends React.Component {
         if (this.props.currentUser) {
             this.startGame()
         }
-    } 
+    }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearInterval(this.gameInt, this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
     }
-    
+
 
     // clearGameInt = setInterval(() => {
     //     if (this.props.health === 0 ) {
@@ -159,8 +160,20 @@ class Game extends React.Component {
         }
     }
 
+    upgradeWell = () => {
+        if (this.props.well === 'small' && this.props.fireWood >= 10) {
+            this.props.upgradeWell()
+        } else if (this.props.well === 'medium' && this.props.fireWood >= 20) {
+            this.props.upgradeWell()
+        } else {
+            window.alert('You need more Firewood')
+        }
+
+    }
+
     weatherInt = setInterval(() => {
         this.displayWeather()
+        this.setState({alerts: `Weather is ${this.state.weather} , Temperature is ${this.state.temperature}°`})
     }, 20000);
 
     wellInt = setInterval(() => {
@@ -176,30 +189,35 @@ class Game extends React.Component {
     decreaseScoreInt = setInterval(() => {
         if (this.props.fire === 0 && this.props.score >= 5 && this.state.temperature < 60) {
             this.props.decreaseScore()
+            this.setState({alerts: 'Warning!!!! Fire is low, Chop some Trees'})
         }
     }, 4000);
 
     decreaseHealthInt = setInterval(() => {
         if (this.props.fire === 0 && this.props.health >= 10 && this.state.temperature < 70) {
             this.props.decreaseHealth()
+            this.setState({alerts: `Warning!!!! Your health is decreasing`})
         }
     }, 4000)
 
     decreaseBodyTempInt = setInterval(() => {
         if (this.props.fire === 0 && this.props.bodyTemp >= 66 && this.state.temperature < 60) {
             this.props.decreaseBodyTempBy10()
+            this.setState({alerts: `Warning!!!! Your Body's Temperature is decreasing`})
         }
     }, 4000)
 
     increaseHealthInt = setInterval(() => {
         if (this.props.fire > 0 && this.props.health <= 90) {
             this.props.increaseHealth()
+            this.setState({alerts: `Your Body's Temperature is increasing!!`})
         }
     }, 4000)
 
     increaseBodyTempBy10Int = setInterval(() => {
         if (this.props.fire > 0 && this.props.bodyTemp <= 88) {
             this.props.increaseBodyTempBy10()
+            this.setState({alerts: `Your Health and Body's Temperature are increasing!!`})
         }
     }, 4000)
 
@@ -218,7 +236,7 @@ class Game extends React.Component {
     //     //         <p>Trees Planted: ${this.props.trees.length}</p>
     //     //         <p>Trees Chopped: ${this.props.treesChopped}</p>
     //     //         <p>Firewood: ${this.props.fireWood}</p>
-                
+
     //     //     `
     //     }
     // }, 4000)
@@ -261,10 +279,15 @@ class Game extends React.Component {
                                     Plant Tree <button onClick={this.plantTree}><img src="https://media.istockphoto.com/vectors/illustration-of-human-hand-holding-green-small-tree-image-for-vector-id517049638?k=6&m=517049638&s=612x612&w=0&h=FNpXoH_gDwAlKBzYalzeSvZ3Hh8DfvcURin7nYz3x6g=" alt="seedling" class="img-size" /></button>
                                     Water Tree <button onClick={this.waterTree} > <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fst2.depositphotos.com%2F1060654%2F8908%2Fv%2F950%2Fdepositphotos_89087864-stock-illustration-watering-can-vector.jpg" alt="watering-can" class="img-size" /> </button>
                                     Cut Tree <button onClick={this.chopTree}><img src="https://static.vecteezy.com/system/resources/previews/000/516/135/original/axe-in-the-stump-vector-illustration.jpg" alt="axe" class="img-size" /></button>
-                                    Upgrade Well <button onClick={this.props.upgradeWell} >Upgrade</button>
+                                    Upgrade Well <button onClick={this.upgradeWell} >Upgrade</button>
 
                                 </div> {/* End tools div */}
                             </div> {/* End Stats div*/}
+
+                            <div id='alerts'>
+                                <h4>{this.state.alerts}</h4>
+                            </div>
+
                             {/* <div style={{backgroundImage: Sunny1, height:'100%', width: '100%'}}> </div> */}
                             <GameView
                             />

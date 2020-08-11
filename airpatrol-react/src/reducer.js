@@ -120,6 +120,8 @@ function reducer(state = defaultState, action) {
                 return { ...state, well: 'medium', fireWood: state.fireWood -= 10 }
             } else if (state.well === 'medium' && state.fireWood >= 20) {
                 return { ...state, well: 'Large', fireWood: state.fireWood -= 20 }
+            } else{
+                return {...state}
             }
 
         case 'REDUCE_WATER_SUPPLY':
