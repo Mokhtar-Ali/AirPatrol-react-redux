@@ -16,7 +16,7 @@ const defaultState = {
     oxygen: 0,
     carbon_dioxide: 0,
     well: 'small',
-    water_supply: 5
+    water_supply: 100
 
 }
 

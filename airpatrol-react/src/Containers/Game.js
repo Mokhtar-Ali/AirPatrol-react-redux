@@ -121,15 +121,20 @@ class Game extends React.Component {
     }
 
     waterTree = () => {
-
-        let id = this.props.trees[0].id
+        let tree = this.props.trees[this.props.trees.length - 1]
+        let id = tree.id
+        let size = tree.size
         // console.log(id);
         // console.log(props.trees);
-        if (this.props.water_supply >= 1) {
-            this.props.waterTreeACreator(id)
+        if (this.props.water_supply >= 1 && size !== 'large') {
+            this.props.waterTreeACreator(id, size)
             this.props.reducerWaterSupply()
             this.setState({alerts: `You watered a Tree, Watered Trees get Bigger, Bigger Trees have more Oxygeen and more FireWood`})
-        } else {
+        } else if (this.props.water_supply >= 1 && size === 'large') {
+            this.setState({alerts: `All Trees are watered!! Plant more Trees`})
+            window.alert('All Trees are watered!! Plant more Trees')
+        } 
+        else {
             this.setState({alerts: `Upgrade the well to reserve more water when the Rain comes`})
             window.alert('No water, wait for the rain, or upgrade Well Size')
 
@@ -251,6 +256,8 @@ class Game extends React.Component {
     }, 5000)
 
     render() {
+        console.log(this.props.trees);
+        
         return (
             <div>
                 {

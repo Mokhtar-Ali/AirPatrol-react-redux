@@ -7,7 +7,7 @@ export const removeUser = () => ({ type: 'REMOVE_USER' })
 export const assignAtmosphere = (atmosphere) => ({ type: 'ASSIGN_ATMOSPHERE', payload: atmosphere, trees: atmosphere.trees, oxygen: atmosphere.oxygen, carbon_dioxide: atmosphere.carbon_dioxide })
 
 export const addTree = (data) => dispatch => {
-  fetch(TreesApi, { 
+  fetch(TreesApi, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -19,20 +19,27 @@ export const addTree = (data) => dispatch => {
       dispatch({ type: 'PLANT_TREE', payload: response })
     })
 }
-export const waterTreeACreator = (id) => dispatch => {
-  let data = { size: "medium", oxygen: 5, firewood: 1 };
-  fetch(`${TreesApi}/${id}`, {
-    method: 'PATCH',
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    },
-    body: JSON.stringify(data)
-  }).then(resp => resp.json())
-  .then(response => {    
-  dispatch({ type: 'WATER_TREE', payload: response})
-  });
+export const waterTreeACreator = (id, size) => dispatch => {
+  let data;
+  if (size === 'small') {
+    data = { size: "medium", oxygen: 5, firewood: 2 };
+  } else if (size === 'medium') {
+    data = { size: "large", oxygen: 6, firewood: 3 };
+  }
 
+  if(size === 'small' || size === 'medium'){
+    fetch(`${TreesApi}/${id}`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then(resp => resp.json())
+      .then(response => {
+        dispatch({ type: 'WATER_TREE', payload: response })
+      });
+  }
 }
 
 export const cutTree = (id) => dispatch => {
@@ -58,8 +65,8 @@ export const increaseBodyTempBy10 = () => ({ type: 'INCREASE_BODY_TEMP_10' })
 export const increaseBodyTempBy20 = () => ({ type: 'INCREASE_BODY_TEMP_20' })
 
 
-export const fillWell = () => ({type: 'FILL_WELL'})
-export const upgradeWell = () => ({type: 'UPGRADE_WELL'})
-export const reducerWaterSupply = () => ({type: 'REDUCE_WATER_SUPPLY'})
+export const fillWell = () => ({ type: 'FILL_WELL' })
+export const upgradeWell = () => ({ type: 'UPGRADE_WELL' })
+export const reducerWaterSupply = () => ({ type: 'REDUCE_WATER_SUPPLY' })
 
-export const restartGame = () => ({type: 'RESTART_GAME'})
+export const restartGame = () => ({ type: 'RESTART_GAME' })
