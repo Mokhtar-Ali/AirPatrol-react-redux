@@ -5,7 +5,7 @@ const defaultState = {
     treesNum: 10,
     atmosphere: null,
     timer: 180, // work on logic for timer
-    fireWood: 20,
+    fireWood: 0,
     fire: 100,
     weather: "",
     temperature: 0,
@@ -45,7 +45,7 @@ function reducer(state = defaultState, action) {
                 well: 'small',
                 water_supply: 5
             }
-            
+
 
         case 'ASSIGN_ATMOSPHERE':
             let oxygen = action.payload.oxygen
@@ -55,7 +55,8 @@ function reducer(state = defaultState, action) {
                 // carbon_dioxide += tree.carbon_dioxide
             })
             return {
-                ...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: oxygen, carbon_dioxide: carbon_dioxide }
+                ...state, atmosphere: action.payload, trees: action.payload.trees, oxygen: oxygen, carbon_dioxide: carbon_dioxide
+            }
 
         case 'INCREASE_SCORE':
             return { ...state, score: state.score += 10 }
@@ -92,9 +93,17 @@ function reducer(state = defaultState, action) {
             return { ...state, health: state.health -= 10 }
 
         case 'DECREASE_FIRE_10':
-            return { ...state, fire: state.fire -= 10 }
+            if (state.fire >= 10) {
+                return { ...state, fire: state.fire -= 10 }
+            }else {
+                return {...state}
+            }
         case 'DECREASE_FIRE_20':
-            return { ...state, fire: state.fire -= 20 }
+            if (state.fire >= 20) {
+                return { ...state, fire: state.fire -= 20 }
+            }else {
+                return {...state}
+            }
 
         case 'DECREASE_BODY_TEMP_10':
             return { ...state, bodyTemp: state.bodyTemp -= 10 }
@@ -120,8 +129,8 @@ function reducer(state = defaultState, action) {
                 return { ...state, well: 'medium', fireWood: state.fireWood -= 10 }
             } else if (state.well === 'medium' && state.fireWood >= 20) {
                 return { ...state, well: 'Large', fireWood: state.fireWood -= 20 }
-            } else{
-                return {...state}
+            } else {
+                return { ...state }
             }
 
         case 'REDUCE_WATER_SUPPLY':

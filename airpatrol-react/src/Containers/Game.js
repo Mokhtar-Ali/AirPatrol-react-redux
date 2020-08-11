@@ -103,7 +103,7 @@ class Game extends React.Component {
             this.props.addTree(data)
             this.props.increaseScore()
             this.props.reducerWaterSupply()
-            this.setState({alerts: `Tree Planted!! More Oxygen in the Atmosphere 😊`})
+            this.setState({alerts: `Tree Planted!! More Oxygen in the Atmosphere +10 Score 😊`})
         } else {
             window.alert('No water, wait for the rain, or upgrade Well Size')
         }
@@ -128,17 +128,19 @@ class Game extends React.Component {
         if (this.props.water_supply >= 1) {
             this.props.waterTreeACreator(id)
             this.props.reducerWaterSupply()
+            this.setState({alerts: `You watered a Tree, Watered Trees get Bigger, Bigger Trees have more Oxygeen and more FireWood`})
         } else {
-            window.alert('No water, wait for the rain, or upgrade Well Size')
             this.setState({alerts: `Upgrade the well to reserve more water when the Rain comes`})
+            window.alert('No water, wait for the rain, or upgrade Well Size')
 
         }
     };
 
 
     feedFire = () => {
-        if (this.props.fire <= 20) {
+        if (this.props.fire <= 10) {
             this.props.moreFire()
+            this.setState({alerts: `You have ${this.props.fireWood} Firewood`})
         } else {
             this.props.decreaseFire10()
         }
@@ -185,19 +187,20 @@ class Game extends React.Component {
     wellInt = setInterval(() => {
         if (this.state.weather === "Rainy  🌧") {
             this.props.fillWell()
+            this.setState({alerts: `It's RAINING!!!! Your Well is Full`})
         }
-    }, 5000)
+    }, 10000)
 
     fireInt = setInterval(() => {
         this.feedFire()
-    }, 4000);
+    }, 3000);
 
     decreaseScoreInt = setInterval(() => {
         if (this.props.fire === 0 && this.props.score >= 5 && this.state.temperature < 60) {
             this.props.decreaseScore()
             this.setState({alerts: 'Warning!!!! Fire is low, Chop some Trees'})
         }
-    }, 4000);
+    }, 3000);
 
     decreaseHealthInt = setInterval(() => {
         if (this.props.fire === 0 && this.props.health >= 10 && this.state.temperature < 70) {
@@ -211,14 +214,14 @@ class Game extends React.Component {
             this.props.decreaseBodyTempBy10()
             this.setState({alerts: `Warning!!!! Your Body's Temperature is decreasing`})
         }
-    }, 4000)
+    }, 5000)
 
     increaseHealthInt = setInterval(() => {
         if (this.props.fire > 0 && this.props.health <= 90) {
             this.props.increaseHealth()
             this.setState({alerts: `Your Body's Temperature is increasing!!`})
         }
-    }, 4000)
+    }, 3000)
 
     increaseBodyTempBy10Int = setInterval(() => {
         if (this.props.fire > 0 && this.props.bodyTemp <= 88) {
@@ -227,25 +230,25 @@ class Game extends React.Component {
         }
     }, 4000)
 
-    // gameInt = setInterval(() => {
-    //     if (this.props.health <= 10 ) {
-    //         clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
-    //         this.redirectToHome()
-    //     //     // window.alert('GAME OVER')
-    //     //     document.getElementById('game').innerHTML = `
-    //     //         <h4>Game Over</h4>
-    //     //         <p>Name: ${this.props.currentUser.name}</p>
-    //     //         <p>Score: ${this.props.score}</p>
-    //     //         <p>Health: ${this.props.health} % </p>
-    //     //         <p>Oxygen: ${this.props.oxygen} </p>
-    //     //         <p>Carbon Dioxide: ${this.props.carbon_dioxide} </p>
-    //     //         <p>Trees Planted: ${this.props.trees.length}</p>
-    //     //         <p>Trees Chopped: ${this.props.treesChopped}</p>
-    //     //         <p>Firewood: ${this.props.fireWood}</p>
+    gameInt = setInterval(() => {
+        if (this.props.health <= 10 ) {
+            clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
+            this.redirectToHome()
+        //     // window.alert('GAME OVER')
+        //     document.getElementById('game').innerHTML = `
+        //         <h4>Game Over</h4>
+        //         <p>Name: ${this.props.currentUser.name}</p>
+        //         <p>Score: ${this.props.score}</p>
+        //         <p>Health: ${this.props.health} % </p>
+        //         <p>Oxygen: ${this.props.oxygen} </p>
+        //         <p>Carbon Dioxide: ${this.props.carbon_dioxide} </p>
+        //         <p>Trees Planted: ${this.props.trees.length}</p>
+        //         <p>Trees Chopped: ${this.props.treesChopped}</p>
+        //         <p>Firewood: ${this.props.fireWood}</p>
 
-    //     //     `
-    //     }
-    // }, 4000)
+        //     `
+        }
+    }, 5000)
 
     render() {
         return (
@@ -261,7 +264,7 @@ class Game extends React.Component {
                                     <p>Body Temperature: {this.props.bodyTemp} ℉ </p>
                                 </div> {/* End Left div */}
 
-                                <div className='middle '>
+                                <div className='middle'>
                                     <p>Weather: {this.state.weather}</p>
                                     <p>Temperature: {this.state.temperature}</p>
                                     <p>Oxygen: {this.props.oxygen} </p>
@@ -281,7 +284,7 @@ class Game extends React.Component {
                                 </div> {/* End right div */}
 
                                 <div className='tools'>
-                                    <h4 style={{ textAlign: 'center' }}>Tools</h4>
+                                    <h4 style={{ textAlign: 'center', border: '2px white solid' }}>Tools</h4>
                                     Plant Tree <button onClick={this.plantTree}><img src="https://media.istockphoto.com/vectors/illustration-of-human-hand-holding-green-small-tree-image-for-vector-id517049638?k=6&m=517049638&s=612x612&w=0&h=FNpXoH_gDwAlKBzYalzeSvZ3Hh8DfvcURin7nYz3x6g=" alt="seedling" class="img-size" /></button>
                                     Water Tree <button onClick={this.waterTree} > <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fst2.depositphotos.com%2F1060654%2F8908%2Fv%2F950%2Fdepositphotos_89087864-stock-illustration-watering-can-vector.jpg" alt="watering-can" class="img-size" /> </button>
                                     Cut Tree <button onClick={this.chopTree}><img src="https://static.vecteezy.com/system/resources/previews/000/516/135/original/axe-in-the-stump-vector-illustration.jpg" alt="axe" class="img-size" /></button>
