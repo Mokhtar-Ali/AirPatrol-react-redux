@@ -1,12 +1,12 @@
 const defaultState = {
     currentUser: null,
     trees: [],
-    score: 10,
+    score: 0,
     treesNum: 10,
     atmosphere: null,
     timer: 180, // work on logic for timer
-    fireWood: 0,
-    fire: 0,
+    fireWood: 20,
+    fire: 100,
     weather: "",
     temperature: 0,
     bodyTemp: 98,

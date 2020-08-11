@@ -103,6 +103,7 @@ class Game extends React.Component {
             this.props.addTree(data)
             this.props.increaseScore()
             this.props.reducerWaterSupply()
+            this.setState({alerts: `Tree Planted!! More Oxygen in the Atmosphere 😊`})
         } else {
             window.alert('No water, wait for the rain, or upgrade Well Size')
         }
@@ -113,8 +114,9 @@ class Game extends React.Component {
             let treesCopy = [...this.props.trees]
             let id = treesCopy[treesCopy.length - 1].id
             this.props.cutTree(id)
+            this.setState({alerts: `Tree Chopped, Make sure there is Enough Oxygen in the Atmosphere`})
         } else {
-            window.alert('no more trees to cut, better plant some')
+            window.alert('no more trees to cut, Plant some Trees')
         }
     }
 
@@ -128,6 +130,8 @@ class Game extends React.Component {
             this.props.reducerWaterSupply()
         } else {
             window.alert('No water, wait for the rain, or upgrade Well Size')
+            this.setState({alerts: `Upgrade the well to reserve more water when the Rain comes`})
+
         }
     };
 
@@ -163,8 +167,10 @@ class Game extends React.Component {
     upgradeWell = () => {
         if (this.props.well === 'small' && this.props.fireWood >= 10) {
             this.props.upgradeWell()
+            this.setState({alerts: `Well Upgraded to ${this.props.well} size`})
         } else if (this.props.well === 'medium' && this.props.fireWood >= 20) {
             this.props.upgradeWell()
+            this.setState({alerts: `Well Upgraded to ${this.props.well} size`})
         } else {
             window.alert('You need more Firewood')
         }
