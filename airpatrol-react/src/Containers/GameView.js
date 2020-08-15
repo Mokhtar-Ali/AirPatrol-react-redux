@@ -8,13 +8,18 @@ import Fire from '../images/Fire.png'
 import FirePit1 from '../images/fire-pit1.png'
 import FirePit2 from '../images/fire-pit2.png'
 import Firewood from '../images/Firewood.png'
+import FIREWOOD from '../Components/FIREWOOD'
+
 
 
 class GameView extends React.Component {
 
     renderFireWoood = () => {
-        let fireWood = this.props.fireWood
-
+        let array = []
+        for (let i = 2; i < this.props.fireWood; i+=3) {
+            array.push(<FIREWOOD key={i} img={Firewood}/>)
+        }
+        return array
     }
 
     render() {
@@ -38,11 +43,12 @@ class GameView extends React.Component {
                     <div className='fire-container'>
                         {this.props.fire ?
                             <img className='fire' src={Fire} />
-                            :<img className='fire' src={FirePit1} />
+                            : <img className='fire' src={FirePit1} />
                         }
                     </div>
                     <div className='fire-wood-container'>
-                        <img className='fire-wood' src={Firewood} />
+                        {this.renderFireWoood()}
+                        {/* <img className='fire-wood' src={Firewood} /> */}
                     </div>
                 </div>
             </div>

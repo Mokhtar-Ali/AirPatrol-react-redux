@@ -33,7 +33,7 @@ class Game extends React.Component {
 
 
 
-    componentWillMount() {
+    componentDidMount() {
         if (this.props.currentUser) {
             this.startGame()
         }
@@ -138,10 +138,12 @@ class Game extends React.Component {
             this.props.reducerWaterSupply()
             this.setState({alerts: `You watered a Tree, Watered Trees get Bigger, Bigger Trees have more Oxygeen and more FireWood`})
         }
-        else {
+        else if (smallTrees.length >= 1 || mediumTrees.length >= 1 && this.props.water_supply < 1){
             this.setState({alerts: `Upgrade the well to reserve more water when the Rain comes`})
             window.alert('No water, wait for the rain, or upgrade Well Size')
 
+        } else {
+            window.alert('All Trees have been watered! plant more trees')
         }
 
         // let tree = this.props.trees[0]
