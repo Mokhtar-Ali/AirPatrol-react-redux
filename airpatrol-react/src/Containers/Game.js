@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux' 
 import {
     assignAtmosphere,
     addTree, cutTree, waterTreeACreator,
@@ -121,24 +121,48 @@ class Game extends React.Component {
     }
 
     waterTree = () => {
-        let tree = this.props.trees[this.props.trees.length - 1]
-        let id = tree.id
-        let size = tree.size
-        // console.log(id);
-        // console.log(props.trees);
-        if (this.props.water_supply >= 1 && size !== 'large') {
-            this.props.waterTreeACreator(id, size)
+        let smallTrees = this.props.trees.filter(tree => tree.size === "small");
+        let mediumTrees = this.props.trees.filter(tree => tree.size === "medium");
+        let data;
+        if(smallTrees.length >= 1 && this.props.water_supply >= 1){
+            data = data = { size: "medium", oxygen: 5, firewood: 2 };
+            let id = smallTrees[0].id;
+            this.props.waterTreeACreator(id, data)
             this.props.reducerWaterSupply()
             this.setState({alerts: `You watered a Tree, Watered Trees get Bigger, Bigger Trees have more Oxygeen and more FireWood`})
-        } else if (this.props.water_supply >= 1 && size === 'large') {
-            this.setState({alerts: `All Trees are watered!! Plant more Trees`})
-            window.alert('All Trees are watered!! Plant more Trees')
         } 
+        else if (mediumTrees.length >= 1 && this.props.water_supply >= 1){
+            data = { size: "large", oxygen: 6, firewood: 3 };
+            let id = mediumTrees[0].id;
+            this.props.waterTreeACreator(id, data)
+            this.props.reducerWaterSupply()
+            this.setState({alerts: `You watered a Tree, Watered Trees get Bigger, Bigger Trees have more Oxygeen and more FireWood`})
+        }
         else {
             this.setState({alerts: `Upgrade the well to reserve more water when the Rain comes`})
             window.alert('No water, wait for the rain, or upgrade Well Size')
 
         }
+
+        // let tree = this.props.trees[0]
+        // let id = tree.id
+        // let size = tree.size
+        // console.log(id);
+        // console.log(props.trees);
+        // if (this.props.water_supply >= 1 && size !== 'large') {
+        //     this.props.waterTreeACreator(id, size)
+        //     this.props.reducerWaterSupply()
+        //     this.setState({alerts: `You watered a Tree, Watered Trees get Bigger, Bigger Trees have more Oxygeen and more FireWood`})
+        // } 
+        // else if (this.props.water_supply >= 1 && size === 'large') {
+        //     this.setState({alerts: `All Trees are watered!! Plant more Trees`})
+        //     window.alert('All Trees are watered!! Plant more Trees')
+        // } 
+        // else {
+        //     this.setState({alerts: `Upgrade the well to reserve more water when the Rain comes`})
+        //     window.alert('No water, wait for the rain, or upgrade Well Size')
+
+        // }
     };
 
 

@@ -21,11 +21,23 @@
     height: 100px;
     width: 100px;
 }
-.tree-img {
+.tree-img-s {
+    /* background-image: url('../images/Tree.png'); */
+    height: 60px;
+    width: 60px;
+}
+.tree-img-med {
+    /* background-image: url('../images/Tree.png'); */
+    height: 80px;
+    width: 80px;
+}
+.tree-img-lg {
     /* background-image: url('../images/Tree.png'); */
     height: 100px;
     width: 90px;
 }
+
+
 
 .data{
     display: flex;

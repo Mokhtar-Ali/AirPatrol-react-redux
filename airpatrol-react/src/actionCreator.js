@@ -1,5 +1,5 @@
 const TreesApi = "http://localhost:3000/trees";
-
+ 
 export const increaseScore = () => ({ type: 'INCREASE_SCORE' })
 export const decreaseScore = () => ({ type: 'DECREASE_SCORE' })
 export const assignUser = (user) => ({ type: 'ASSIGN_USER', payload: user })
@@ -19,15 +19,7 @@ export const addTree = (data) => dispatch => {
       dispatch({ type: 'PLANT_TREE', payload: response })
     })
 }
-export const waterTreeACreator = (id, size) => dispatch => {
-  let data;
-  if (size === 'small') {
-    data = { size: "medium", oxygen: 5, firewood: 2 };
-  } else if (size === 'medium') {
-    data = { size: "large", oxygen: 6, firewood: 3 };
-  }
-
-  if(size === 'small' || size === 'medium'){
+export const waterTreeACreator = (id, data) => dispatch => {
     fetch(`${TreesApi}/${id}`, {
       method: 'PATCH',
       headers: {
@@ -40,7 +32,7 @@ export const waterTreeACreator = (id, size) => dispatch => {
         dispatch({ type: 'WATER_TREE', payload: response })
       });
   }
-}
+
 
 export const cutTree = (id) => dispatch => {
   fetch(`${TreesApi}/${id}`, {

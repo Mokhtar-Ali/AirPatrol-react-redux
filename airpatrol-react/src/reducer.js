@@ -1,5 +1,5 @@
 const defaultState = {
-    currentUser: null,
+    currentUser: null, 
     trees: [],
     score: 0,
     treesNum: 10,
