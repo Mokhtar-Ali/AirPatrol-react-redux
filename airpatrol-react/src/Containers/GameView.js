@@ -16,7 +16,7 @@ class GameView extends React.Component {
 
     renderFireWoood = () => {
         let array = []
-        for (let i = 2; i < this.props.fireWood; i+=3) {
+        for (let i = 2; i < this.props.fireWood || this.props.fireWood < 25; i+=3) {
             array.push(<FIREWOOD key={i} img={Firewood}/>)
         }
         return array
