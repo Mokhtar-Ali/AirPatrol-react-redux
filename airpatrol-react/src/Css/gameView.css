@@ -1,7 +1,7 @@
 .game-view {
    display: flex;
-   flex-direction: column;
-   height: 800px ;
+   flex-direction: row;
+   height: 577px ;
    width: 100% ;
    background-image: url('../images/Grass.png');
    /* background-repeat: no-repeat; */
@@ -13,8 +13,10 @@
  flex: 2;
  display: flex;
  flex-wrap: wrap;
- align-content: flex-end;
+ align-content: flex-start;
  margin-top: 10px;
+ 
+ height: 550px;
 }
 
 .tree{
@@ -23,18 +25,18 @@
 }
 .tree-img-s {
     /* background-image: url('../images/Tree.png'); */
-    height: 60px;
-    width: 60px;
+    height: 100px;
+    width: 80px;
 }
 .tree-img-med {
     /* background-image: url('../images/Tree.png'); */
-    height: 80px;
-    width: 80px;
+    height: 100px;
+    width: 90px;
 }
 .tree-img-lg {
     /* background-image: url('../images/Tree.png'); */
     height: 100px;
-    width: 90px;
+    width: 1000px;
 }
 
 
@@ -43,41 +45,48 @@
     display: flex;
     flex-direction: row;
     flex:3; 
+    height: 550px;
+
 
 }
 
 .well-container{
     height: 400px;
     width: 400px;
+    
 }
 .well{
     margin-top: 25%;
-    height: 250px;
-    width: 250px;
+    height: 150px;
+    width: 150px;
 
 }
 
 .person{
     display: flex;
-    flex: 2;
-    flex-direction: row;
-    height: 400px;
-    width: 400px;
+    flex: 1;
+    flex-direction: column;
+    /* height: 200px; */
+    /* width: 200px; */
+    
 }
 
 .tent{
-    height: 300px;
+    height: 200px;
+    width: 600px;
     margin-top: 100px;
+    
 }
 
 .fire-container {
-    height: 400px;
-    width: 400px;
+    height: 200px;
+    width: 200px;
+    
 }
 .fire {
-    height: 150px;
-    width: 150px;
-    margin-top:62%;
+    height: 130px;
+    width: 130px;
+    margin-left:200%;
 }
 
 .fire-wood-container{

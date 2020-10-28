@@ -32,7 +32,7 @@ function App(props) {
           }
         });
     }
-  })
+  },[])
 
 
   return (

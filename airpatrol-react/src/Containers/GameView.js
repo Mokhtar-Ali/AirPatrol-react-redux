@@ -14,44 +14,47 @@ import FIREWOOD from '../Components/FIREWOOD'
 
 class GameView extends React.Component {
 
-    renderFireWoood = () => {
-        let array = []
-        for (let i = 2; i < this.props.fireWood || this.props.fireWood < 25; i+=3) {
-            array.push(<FIREWOOD key={i} img={Firewood}/>)
-        }
-        return array
-    }
+    // renderFireWoood = () => {
+    //     let array = []
+    //     for (let i = 2; i < this.props.fireWood || this.props.fireWood < 25; i+=3) {
+    //         array.push(<FIREWOOD key={i} img={Firewood}/>)
+    //     }
+    //     return array
+    // }
 
     render() {
         return (
             <div className='game-view' >
-                <div className='trees'>
-                    {this.props.trees.slice(0, 38).map(tree =>
-                        <Tree
-                            tree={tree}
-                            key={tree.id}
-                        />
-                    )}
-                </div>
+
                 <div className='data'>
                     <div className='well-container'>
                         <img className='well' src={Well} />
                     </div>
                     <div className='person'>
                         <img className='tent' src={Tent} />
+                        <div className='fire-container'>
+                            {this.props.fire ?
+                                <img className='fire' src={Fire} />
+                                : <img className='fire' src={FirePit1} />
+                            }
+                        </div>
                     </div>
-                    <div className='fire-container'>
-                        {this.props.fire ?
-                            <img className='fire' src={Fire} />
-                            : <img className='fire' src={FirePit1} />
-                        }
-                    </div>
-                    <div className='fire-wood-container'>
-                        {this.renderFireWoood()}
-                        {/* <img className='fire-wood' src={Firewood} /> */}
-                    </div>
+
+                    {/* <div className='fire-wood-container'> */}
+                    {/* {this.renderFireWoood()} */}
+                    {/* <img className='fire-wood' src={Firewood} /> */}
+                    {/* </div> */}
+                </div>
+                <div className='trees'>
+                    {this.props.trees.slice(0, 35).map(tree =>
+                        <Tree
+                            tree={tree}
+                            key={tree.id}
+                        />
+                    )}
                 </div>
             </div>
+
         )
     }
 }

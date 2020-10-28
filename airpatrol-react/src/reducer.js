@@ -5,7 +5,7 @@ const defaultState = {
     treesNum: 10,
     atmosphere: null,
     timer: 180, // work on logic for timer
-    fireWood: 0,
+    fireWood: 100,
     fire: 100,
     weather: "",
     temperature: 0,
@@ -15,7 +15,7 @@ const defaultState = {
     treesPlanted: 0,
     oxygen: 0,
     carbon_dioxide: 0,
-    well: 'small',
+    well: 'large',
     water_supply: 100
 
 }
@@ -24,7 +24,7 @@ function reducer(state = defaultState, action) {
     switch (action.type) {
 
         case 'RESTART_GAME':
-            console.log(state)
+            // console.log(state)
             return {
                 ...state,
                 trees: [],
@@ -43,7 +43,7 @@ function reducer(state = defaultState, action) {
                 oxygen: 0,
                 carbon_dioxide: 0,
                 well: 'small',
-                water_supply: 5
+                water_supply: 100
             }
 
 
