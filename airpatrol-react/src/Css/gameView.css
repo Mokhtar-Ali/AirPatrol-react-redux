@@ -36,7 +36,7 @@
 .tree-img-lg {
     /* background-image: url('../images/Tree.png'); */
     height: 100px;
-    width: 1000px;
+    width: 100px;
 }
 
 
@@ -51,8 +51,8 @@
 }
 
 .well-container{
-    height: 400px;
-    width: 400px;
+    height: 200px;
+    width: 200px;
     
 }
 .well{

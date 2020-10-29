@@ -46,7 +46,7 @@ class GameView extends React.Component {
                     {/* </div> */}
                 </div>
                 <div className='trees'>
-                    {this.props.trees.slice(0, 35).map(tree =>
+                    {this.props.trees.slice(0, 25).map(tree =>
                         <Tree
                             tree={tree}
                             key={tree.id}

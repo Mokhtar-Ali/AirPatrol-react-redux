@@ -15,7 +15,7 @@ const defaultState = {
     treesPlanted: 0,
     oxygen: 0,
     carbon_dioxide: 0,
-    well: 'large',
+    well: 'small',
     water_supply: 100
 
 }
@@ -32,7 +32,7 @@ function reducer(state = defaultState, action) {
                 treesNum: 10,
                 atmosphere: null,
                 timer: 180, // work on logic for timer
-                fireWood: 0,
+                fireWood: 100,
                 fire: 0,
                 weather: "",
                 temperature: 0,
@@ -43,7 +43,7 @@ function reducer(state = defaultState, action) {
                 oxygen: 0,
                 carbon_dioxide: 0,
                 well: 'small',
-                water_supply: 100
+                water_supply: 5
             }
 
 

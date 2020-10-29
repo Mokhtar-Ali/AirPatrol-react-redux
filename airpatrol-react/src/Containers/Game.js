@@ -31,6 +31,9 @@ class Game extends React.Component {
         this.props.history.push("GameOver");
     }
 
+    gameWinner = () => {
+        this.props.history.push("Winner")
+    }
 
 
     componentDidMount() {
@@ -40,7 +43,7 @@ class Game extends React.Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.gameInt, this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
+        clearInterval(this.gameInt, this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt, this.winGameInt);
     }
 
 
@@ -263,24 +266,24 @@ class Game extends React.Component {
 
     gameInt = setInterval(() => {
         if (this.props.health <= 10 ) {
-            clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt);
+            clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt, this.winGameInt);
             this.redirectToHome()
-        //     // window.alert('GAME OVER')
-        //     document.getElementById('game').innerHTML = `
-        //         <h4>Game Over</h4>
-        //         <p>Name: ${this.props.currentUser.name}</p>
-        //         <p>Score: ${this.props.score}</p>
-        //         <p>Health: ${this.props.health} % </p>
-        //         <p>Oxygen: ${this.props.oxygen} </p>
-        //         <p>Carbon Dioxide: ${this.props.carbon_dioxide} </p>
-        //         <p>Trees Planted: ${this.props.trees.length}</p>
-        //         <p>Trees Chopped: ${this.props.treesChopped}</p>
-        //         <p>Firewood: ${this.props.fireWood}</p>
-
-        //     `
         }
     }, 5000)
 
+    winGameInt = setInterval(() => {
+        if(this.props.carbon_dioxide <= 0){
+            clearInterval(this.weatherInt, this.wellInt, this.fireInt, this.decreaseScoreInt, this.decreaseHealthInt, this.decreaseBodyTempInt, this.increaseHealthInt, this.increaseBodyTempBy10Int, this.gameInt, this.winGameInt);
+            this.props.restartGame()
+            this.gameWinner()
+        }
+    }, 5000)
+
+    clearWinGameInt = setInterval(() => {
+        if(this.props.carbon_dioxide <= 0){
+            clearInterval(this.winGameInt);
+        }
+    }, 5000)
     render() {
         console.log(this.props.trees);
         
