@@ -14,7 +14,7 @@ function Game(props) {
 
     useEffect(() => {
 
-        if (props.currentUser) {
+        if (props.currentUser) { // If logged in, create an atmosphere for the player
             fetch("http://localhost:3000/atmospheres", {
                 method: "Post",
                 headers: {
@@ -33,7 +33,7 @@ function Game(props) {
 
 
 
-    function displayWeather() {
+    function displayWeather() { // display weather based on temperature 
         const weather = ["Sunny  ☀️", "Rainy  🌧", "Cloudy  🌫", "Snowy  ❄️"];
         const randomCondition = weather[Math.floor(Math.random() * weather.length)];
         setWeather(randomCondition)
@@ -53,13 +53,13 @@ function Game(props) {
         }
     };
 
-    function plantTree() {
+    function plantTree() { // POST a Tree
         let data = { atmosphere_id: props.atmosphere.id };
         props.addTree(data)
         props.increaseScore()
     }
 
-    function chopTree() {
+    function chopTree() {// Delete a tree
         if (props.trees.length > 1) {
             let treesCopy = [...props.trees]
             let id = treesCopy[treesCopy.length - 1].id
@@ -69,7 +69,7 @@ function Game(props) {
         }
     }
 
-    function waterTree() {
+    function waterTree() { // Patch fetch a tree
         let id = props.trees[0].id
         console.log(id);
         console.log(props.trees);
