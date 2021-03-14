@@ -26,20 +26,6 @@ function Game(props) {
                 .then(response => props.assignAtmosphere(response))
         } else { history.push('/') }
         displayWeather()
-
-        // const interval = setInterval(() => {
-        //     if (fire < 50) {
-        //         let newFire = 100
-        //         let newFireWood = fireWood - 2
-        //         setFire(newFire)
-        //         setFireWood(newFireWood)
-        //     } else if (fire > 50) {
-        //         let newFire = fire - 10
-        //         setFire(newFire)
-        //     }
-        // }, 3000);
-
-        // return () => clearInterval(interval);
     }, [])
 
 
@@ -88,53 +74,6 @@ function Game(props) {
         console.log(id);
         console.log(props.trees);
         props.waterTreeACreator(id)
-
-        // let smallTrees = this.state.trees.filter(tree => tree.size === "small");
-        // let mediumTrees = this.state.trees.filter(tree => tree.size === "medium");
-        // let myTrees = [...this.state.trees]
-        // let data;
-        // if (smallTrees.length >= 1) {
-        //     data = { size: "medium", oxygen: 5, carbon_dioxide: -4, firewood: 1 };
-        //     let id = smallTrees[0].id;
-        //     fetch(`http://localhost:3000/trees/${id}`, {
-        //         method: "PATCH",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             Accept: "application/json"
-        //         },
-        //         body: JSON.stringify(data)
-        //     })
-        //         .then(resp => resp.json())
-        //         .then(response => {
-        //             let trees2 = [...this.state.trees];
-        //             let index = trees2.findIndex(t => t.id === id);
-        //             trees2.splice(index, 1, response);
-        //             this.setState({ trees: trees2 });
-        //             smallTrees.splice(0, 1)
-        //             console.log(smallTrees, 'small trees?')
-        //         });
-        // } else if (smallTrees.length >= 1 && mediumTrees) {
-        //     data = { size: "large", oxygen: 7, carbon_dioxide: -6, firewood: 2 };
-        //     let id = smallTrees[0].id;
-        //     fetch(`http://localhost:3000/trees/${id}`, {
-        //         method: "PATCH",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             Accept: "application/json"
-        //         },
-        //         body: JSON.stringify(data)
-        //     })
-        //         .then(resp => resp.json())
-        //         .then(response => {
-        //             let trees2 = [...this.state.trees];
-        //             let index = trees2.findIndex(t => t.id === id);
-        //             trees2.splice(index, 1, response);
-        //             // debugger
-        //             this.setState({ trees: trees2 });
-        //         });
-        // } else {
-        //     alert("All trees have been watered and there's more oxygen for everybody!😁");
-        // }
     };
 
 
@@ -236,10 +175,3 @@ const msp = state => {
 }
 
 export default connect(msp, { assignAtmosphere, addTree, cutTree, increaseScore, decreaseScore, moreFire, increaseHealth, decreaseHealth, decreaseFire10, decreaseFire20, decreaseBodyTempBy10, decreaseBodyTempBy20, increaseBodyTempBy10, increaseBodyTempBy20, waterTreeACreator })(Game)
-
-
-// timer: 180, // work on logic for timer
-// weather: "",
-// temperature: null,
-// bodyTemp: 99,
-// health: 100
